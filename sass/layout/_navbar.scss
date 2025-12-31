@@ -1,0 +1,100 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1.5rem 0;
+    background: rgba(2, 2, 5, 0.8); // Koinot rangiga mos shaffoflik
+    backdrop-filter: blur(12px);    // Orqa fonni xiralashtirish (Glass effect)
+    border-bottom: 1px solid v.$glass-border;
+    transition: v.$transition;
+
+    // Scroll bo'lganda navbar kichrayishi uchun (JS orqali .scrolled klassi qo'shiladi)
+    &.scrolled {
+        padding: 0.8rem 0;
+        background: rgba(2, 2, 5, 0.95);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+        
+        a {
+            color: v.$text-main;
+            text-decoration: none;
+            
+            span {
+                color: v.$primary;
+                text-shadow: 0 0 15px rgba(v.$primary, 0.5);
+            }
+        }
+    }
+
+    .nav-menu {
+        ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+
+            .nav-link {
+                color: v.$text-dim;
+                text-decoration: none;
+                font-weight: 500;
+                font-size: 0.95rem;
+                position: relative;
+                transition: v.$transition;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -5px;
+                    left: 0;
+                    width: 0;
+                    height: 2px;
+                    background: v.$gradient;
+                    transition: v.$transition;
+                }
+
+                &:hover, &.active {
+                    color: v.$text-main;
+                    &::after {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    .header-socials {
+        a {
+            color: v.$text-main;
+            font-size: 1.4rem;
+            transition: v.$transition;
+
+            &:hover {
+                color: v.$primary;
+                transform: translateY(-3px);
+                filter: drop-shadow(0 0 8px v.$primary);
+            }
+        }
+    }
+}
+
+// Mobil qurilmalar uchun moslashuvchanlik (Responsive)
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none; // Mobil menyu uchun keyinchalik "hamburger" qo'shish mumkin
+    }
+}
