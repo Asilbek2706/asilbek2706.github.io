@@ -5,7 +5,7 @@
     --nav-blur: rgba(2, 2, 5, 0.8);
     --text-gray: #b0b0b0;
     --accent-cyan: #00f2fe;
-    --nav-height: 80px; /* Navbar balandligi */
+    --nav-height: 80px;
 }
 
 * {
@@ -28,6 +28,7 @@ body {
     padding: 0 24px;
 }
 
+/* --- NAVBAR --- */
 .navbar {
     position: fixed;
     top: 0;
@@ -44,7 +45,6 @@ body {
 .navbar.scrolled {
     padding: 0.8rem 0;
     background: rgba(2, 2, 5, 0.95);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .navbar .header-container {
@@ -53,15 +53,12 @@ body {
     align-items: center;
 }
 
-.navbar .logo {
+.navbar .logo a {
     font-size: 1.5rem;
     font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.navbar .logo a {
     color: #ffffff;
     text-decoration: none;
+    letter-spacing: 1px;
 }
 
 .navbar .logo a span {
@@ -69,10 +66,44 @@ body {
     text-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
 }
 
+/* NUQTANI YO'QOTISH UCHUN */
 .navbar .nav-menu ul {
     display: flex;
-    list-style: none;
+    list-style: none !important; /* Standart nuqtani o'chiradi */
     gap: 2.5rem;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    list-style: none !important;
+}
+
+/* --- 3. TOGGLER DEFAULT EFFEKTINI O'CHIRISH --- */
+.navbar-toggler:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* --- 4. MOBILDA NAVBAR FONINI TO'G'IRLASH --- */
+@media (max-width: 992px) {
+    .navbar-collapse.show {
+        background: rgba(2, 2, 5, 0.98);
+        backdrop-filter: blur(15px);
+        padding: 2rem;
+        border-bottom: 2px solid var(--accent-cyan);
+        text-align: center;
+    }
+
+    .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.navbar .nav-menu ul li {
+    list-style: none !important;
 }
 
 .navbar .nav-link {
@@ -81,7 +112,7 @@ body {
     font-weight: 500;
     font-size: 0.95rem;
     position: relative;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: 0.4s;
 }
 
 .navbar .nav-link::after {
@@ -91,8 +122,8 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(135deg, #00f2fe, #7000ff);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--primary-gradient);
+    transition: 0.4s;
 }
 
 .navbar .nav-link:hover, .navbar .nav-link.active {
@@ -103,9 +134,9 @@ body {
     width: 100%;
 }
 
-.header-socials { display: flex; justify-content: flex-end; }
+.header-socials { display: flex; gap: 1rem; }
 .header-socials a { color: #ffffff; font-size: 1.5rem; transition: 0.3s; text-decoration: none; }
-.header-socials a:hover { color: var(--accent-cyan); transform: translateY(-3px); filter: drop-shadow(0 0 8px #00f2fe); }
+.header-socials a:hover { color: var(--accent-cyan); transform: translateY(-3px); }
 
 /* --- SECTION PADDING --- */
 .section-padding {
@@ -113,7 +144,7 @@ body {
     padding-bottom: 80px;
 }
 
-/* --- FOOTER --- */
+/* --- FOOTER (TELEFONDA KETMA-KET QILINDI) --- */
 .footer {
     padding: 60px 0 30px;
     background: rgba(2, 2, 5, 0.8);
@@ -130,15 +161,13 @@ body {
     margin-bottom: 40px;
 }
 
-.footer .footer-top .logo {
+.footer .logo {
     font-size: 1.8rem;
     font-weight: 800;
     color: #ffffff;
 }
 
-.footer .footer-top .logo span {
-    color: #00f2fe;
-}
+.footer .logo span { color: #00f2fe; }
 
 .footer .social-icons {
     display: flex;
@@ -155,7 +184,6 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     color: #ffffff;
-    font-size: 1.3rem;
     transition: 0.4s;
     text-decoration: none;
 }
@@ -172,49 +200,29 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-@keyframes heartBeat {
-    0%, 30%, 70% { transform: scale(1); }
-    15%, 45% { transform: scale(1.3); }
-}
-
-.cursor-follower {
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    background: #00f2fe;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    box-shadow: 0 0 20px #00f2fe;
-}
-
-/* --- CUSTOM TOGGLER --- */
+/* --- TOGGLER --- */
 .custom-toggler {
     padding: 10px 12px;
     border: 2px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 8px;
-    display: none; /* Desktopda yashirin */
+    display: none;
     flex-direction: column;
     gap: 5px;
     background: transparent;
+    cursor: pointer;
 }
 
 .toggler-icon {
     width: 25px;
     height: 2px;
     background-color: #ffffff;
-    display: block;
 }
 
-/* --- MOBILE LOGIC (Tuzatildi) --- */
+/* --- MOBILE LOGIC --- */
 @media (max-width: 991px) {
-    .custom-toggler {
-        display: flex; /* Faqat telefonda chiqadi */
-    }
+    .custom-toggler { display: flex; }
 
-    .nav-menu:not(.show) {
-        display: none !important; /* Bootstrap "show" klassi bo'lmasa yashirib turadi */
-    }
+    .nav-menu:not(.show) { display: none !important; }
 
     .navbar-collapse.show {
         display: block !important;
@@ -226,15 +234,24 @@ body {
         backdrop-filter: blur(15px);
         padding: 2rem;
         border-bottom: 2px solid var(--accent-cyan);
-        text-align: center;
     }
 
     .navbar-nav {
         flex-direction: column;
         gap: 20px !important;
+        list-style: none !important;
     }
 
-    .cursor-follower {
-        display: none !important;
+    /* FOOTER MOBILDA KETMA-KET */
+    .footer .footer-top {
+        flex-direction: column !important;
+        gap: 25px;
+        text-align: center;
     }
+
+    .footer .social-icons {
+        justify-content: center;
+    }
+
+    .cursor-follower { display: none !important; }
 }
