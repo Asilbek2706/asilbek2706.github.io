@@ -384,6 +384,31 @@ canvas#star-canvas {
   background: linear-gradient(135deg, #00f2fe, #7000ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  position: relative;
+  display: inline-block;
+}
+.contact-info h2 span::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #00f2fe, #7000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: blur(15px);
+  opacity: 0.7;
+}
+.contact-info h2 span {
+  animation: shine 3s infinite alternate;
+}
+@keyframes shine {
+  from {
+    filter: hue-rotate(0deg) drop-shadow(0 0 5px rgba(0, 242, 254, 0.2));
+  }
+  to {
+    filter: hue-rotate(15deg) drop-shadow(0 0 15px rgba(0, 242, 254, 0.5));
+  }
 }
 .contact-info p {
   color: #b0b0b0;
@@ -845,25 +870,6 @@ canvas#star-canvas {
   align-items: center;
   gap: 10px;
   transition: 0.3s ease;
-}
-
-.cursor-follower {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  background: #00f2fe;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  box-shadow: 0 0 20px #00f2fe;
-  visibility: visible;
-}
-
-@media (max-width: 1024px) {
-  .cursor-follower {
-    display: none !important;
-    visibility: hidden !important;
-  }
 }
 
 /*# sourceMappingURL=style.css.map */

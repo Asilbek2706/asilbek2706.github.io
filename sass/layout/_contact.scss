@@ -29,6 +29,32 @@
             background: v.$gradient;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+
+            &::after {
+                content: attr(data-text);
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: -1;
+                background: v.$gradient;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                filter: blur(15px);
+                opacity: 0.7;
+            }
+
+            animation: shine 3s infinite alternate;
+        }
+
+        @keyframes shine {
+            from {
+                filter: hue-rotate(0deg) drop-shadow(0 0 5px rgba(v.$primary, 0.2));
+            }
+            to {
+                filter: hue-rotate(15deg) drop-shadow(0 0 15px rgba(v.$primary, 0.5));
+            }
         }
     }
 
@@ -66,17 +92,15 @@
     }
 }
 
-// --- FORMA: SEN XOHLAGAN STILDA ---
 .contact-form {
     padding: 55px;
-    background: rgba(15, 15, 15, 0.8); // Toza qora emas, juda quyuq kulrang (Premium bg)
+    background: rgba(15, 15, 15, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 35px;
     position: relative;
     backdrop-filter: blur(10px);
     transition: 0.5s ease;
 
-    // --- HOVER: STATIK YULDUZLI CHIROQ ---
     &::before {
         content: '';
         position: absolute;
@@ -93,7 +117,7 @@
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
 
         &::before {
-            opacity: 1; // Hover bo'lganda burchakda mayin nur paydo bo'ladi
+            opacity: 1;
         }
     }
 
@@ -112,7 +136,7 @@
             transition: 0.4s;
 
             &::placeholder {
-                color: rgba(255, 255, 255, 0.5); // Endi placeholder aniq ko'rinadi
+                color: rgba(255, 255, 255, 0.5);
             }
 
             &:focus {
@@ -122,11 +146,10 @@
             }
         }
 
-        // --- CHAP TARAFDAGI NOZIK CHIROQLI CHIZIQ ---
         &::after {
             content: '';
             position: absolute;
-            left: -1px; // Input chetida turadi
+            left: -1px;
             top: 50%;
             width: 3px;
             height: 0;
@@ -138,7 +161,7 @@
         }
 
         &:focus-within::after {
-            height: 25px; // Faqat fokusda chiqadi
+            height: 25px;
         }
     }
 
@@ -157,8 +180,6 @@
         gap: 12px;
         cursor: pointer;
         transition: 0.4s;
-
-        // Button doim korinarli
         box-shadow: 0 10px 20px rgba(v.$primary, 0.2);
 
         &:hover {

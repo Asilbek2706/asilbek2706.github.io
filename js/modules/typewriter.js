@@ -1,11 +1,14 @@
 export const initTypewriter = (elementId, words) => {
     const el = document.getElementById(elementId);
+    if (!el) return;
+
     let wordIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
 
     function type() {
         const currentWord = words[wordIndex];
+
         if (isDeleting) {
             el.textContent = currentWord.substring(0, charIndex - 1);
             charIndex--;
@@ -18,7 +21,7 @@ export const initTypewriter = (elementId, words) => {
 
         if (!isDeleting && charIndex === currentWord.length) {
             isDeleting = true;
-            typeSpeed = 2000; 
+            typeSpeed = 2000;
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             wordIndex = (wordIndex + 1) % words.length;
