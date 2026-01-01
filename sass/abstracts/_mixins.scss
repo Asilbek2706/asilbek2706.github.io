@@ -1,3 +1,5 @@
+@use 'variables' as v;
+
 @mixin flex-between {
     display: flex;
     justify-content: space-between;
@@ -9,8 +11,8 @@
 }
 
 @mixin neon-border {
-    border: 1px solid $border-color;
-    transition: $transition;
+    border: 1px solid v.$glass-border;
+    transition: v.$transition;
     &:hover {
         border-color: $primary;
         box-shadow: 0 0 20px rgba($primary, 0.15);

@@ -243,3 +243,46 @@ body {
         visibility: hidden !important;
     }
 }
+
+    /* --- CUSTOM HAMBURGER MENU (TOGGLER) --- */
+    .custom-toggler {
+        padding: 10px 12px;
+        border: 2px solid rgba(255, 255, 255, 0.2) !important; /* Skrinshotdagi kabi ramka */
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        background: transparent;
+    }
+
+    .toggler-icon {
+        width: 25px;
+        height: 2px;
+        background-color: #ffffff; /* Oq chiziqlar */
+        display: block;
+        transition: 0.3s;
+    }
+
+    /* Mobil menyu ochilgandagi dizayn */
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            background: rgba(2, 2, 5, 0.98);
+            backdrop-filter: blur(15px);
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            border-bottom: 2px solid var(--accent-cyan);
+            text-align: center;
+        }
+
+        .navbar-nav {
+            gap: 20px !important;
+        }
+
+        .mobile-socials {
+            margin-top: 20px;
+            justify-content: center;
+        }
+    }
