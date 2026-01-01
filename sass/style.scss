@@ -13,15 +13,4 @@
 @use 'components/buttons';
 @use 'components/cards';
 @use 'components/projects';
-
-    .cursor-follower {
-        position: fixed;
-        width: 20px;
-        height: 20px;
-        background: v.$primary;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        box-shadow: 0 0 20px v.$primary;
-        visibility: visible;
-    }
+@use 'components/cursor-follower';

@@ -9,12 +9,13 @@
     .section-title {
         text-align: center;
         margin-bottom: 60px;
-        font-size: 3rem;
-        
+        font-size: clamp(2rem, 5vw, 3.5rem); // Mobil uchun moslanuvchan o'lcham
+
         .highlight {
             background: v.$gradient;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(v.$primary, 0.3));
         }
     }
 }
@@ -23,27 +24,28 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
-    padding: 20px 0;
+    padding: 0 20px;
 }
 
 .skill-card {
-    background: v.$glass-bg;
+    background: rgba(255, 255, 255, 0.015); // Glassmorphism effekti
     backdrop-filter: blur(15px);
     border: 1px solid v.$glass-border;
-    padding: 40px;
-    border-radius: 20px;
+    padding: 45px 35px;
+    border-radius: 25px;
     text-align: center;
-    transition: v.$transition;
+    transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 
+    // Hoverda paydo bo'ladigan nozik ichki nur
     &::before {
         content: '';
         position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at top right, rgba(v.$primary, 0.1), transparent);
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(v.$primary, 0.08), transparent 60%);
         opacity: 0;
-        transition: v.$transition;
+        transition: 0.5s;
     }
 
     i {
@@ -51,22 +53,24 @@
         background: v.$gradient;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        display: block;
-        margin-bottom: 20px;
-        filter: drop-shadow(0 0 10px rgba(v.$primary, 0.3));
-        transition: v.$transition;
+        display: inline-block;
+        margin-bottom: 25px;
+        filter: drop-shadow(0 0 10px rgba(v.$primary, 0.2));
+        transition: 0.5s ease;
     }
 
     h3 {
-        font-size: 1.5rem;
-        margin-bottom: 25px;
-        letter-spacing: 1px;
+        font-size: 1.4rem;
+        margin-bottom: 30px;
+        font-weight: 600;
         color: v.$text-main;
+        letter-spacing: 1px;
     }
 
+    /* --- PROGRESS BAR STYLES --- */
     .progress-bar {
         width: 100%;
-        height: 6px;
+        height: 7px;
         background: rgba(255, 255, 255, 0.05);
         border-radius: 10px;
         overflow: hidden;
@@ -76,34 +80,38 @@
             height: 100%;
             background: v.$gradient;
             border-radius: 10px;
-            box-shadow: 0 0 15px v.$primary;
-            transition: width 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            width: 0; // JS o'zgartirguncha 0 turadi
             position: relative;
+            // Bar uchidagi neon nuqta effekti
+            box-shadow: 0 0 12px rgba(v.$primary, 0.5);
 
+            // Yaltirash effekti (Shine)
             &::after {
                 content: '';
                 position: absolute;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-                animation: progress-shine 2s infinite;
+                top: 0; left: 0; width: 100px; height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+                animation: progress-shine 3s infinite linear;
             }
         }
     }
 
     &:hover {
-        transform: translateY(-10px);
-        border-color: v.$primary;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(v.$primary, 0.1);
-        
+        transform: translateY(-12px);
+        border-color: rgba(v.$primary, 0.4);
+        background: rgba(v.$primary, 0.02);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+
         &::before { opacity: 1; }
         i {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 20px rgba(v.$primary, 0.5));
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 0 20px rgba(v.$primary, 0.6));
         }
     }
 }
 
+// Yaltirash animatsiyasi silliq chiqishi uchun
 @keyframes progress-shine {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% { left: -150px; }
+    100% { left: 100%; }
 }

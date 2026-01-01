@@ -1,94 +1,105 @@
-// 1. Importlar har doim eng tepada bo'lishi kerak
+// 1. Importlar
 import { initTypewriter } from './modules/typewriter.js';
 
+// --- QURILMANI TEKSHIRISH (Mobile/Tablet o'chirish uchun) ---
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
 // --- CURSOR FOLLOWER ---
-const cursor = document.querySelector('.cursor-follower');
+const initCursor = () => {
+    const cursor = document.querySelector('.cursor-follower');
+    if (!cursor) return;
 
-document.addEventListener('mousemove', (e) => {
-    const x = e.clientX - 10;
-    const y = e.clientY - 10;
-    cursor.style.transform = `translate(${x}px, ${y}px)`;
-});
+    // Telefon va planshetlarda kursorni butunlay o'chiramiz
+    if (isTouchDevice) {
+        cursor.style.display = 'none';
+        return;
+    }
 
-const links = document.querySelectorAll('a, button, .skill-card');
-links.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-        cursor.classList.add('cursor-active'); // CSS orqali scale qilish osonroq
-        cursor.style.background = '#ffffff';
+    document.addEventListener('mousemove', (e) => {
+        // requestAnimationFrame orqali harakatni yanada silliq qilamiz
+        requestAnimationFrame(() => {
+            cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
+        });
     });
-    link.addEventListener('mouseleave', () => {
-        cursor.classList.remove('cursor-active');
-        cursor.style.background = '';
+
+    const links = document.querySelectorAll('a, button, .skill-card, .method-card');
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => cursor.classList.add('cursor-active'));
+        link.addEventListener('mouseleave', () => cursor.classList.remove('cursor-active'));
     });
-});
+};
 
 // --- NAVBAR SCROLL EFFECT ---
-window.addEventListener('scroll', () => {
+const handleNavbarScroll = () => {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
+    if (!navbar) return;
 
-// --- DOM CONTENT LOADED ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Typewriter initialization
-    initTypewriter('typewriter', ['Creative Developer', 'Full-stack Developer', 'UI/UX Designer']);
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+};
 
-    // --- MOBILE MENU FUNCTIONALITY (YANGI QISM) ---
-    const menuToggle = document.querySelector('#mobile-menu');
-    const navMenu = document.querySelector('.nav-menu');
-    const menuIcon = menuToggle ? menuToggle.querySelector('i') : null;
+// --- MOBILE MENU FUNCTIONALITY ---
+const initMobileMenu = () => {
+    const menuToggle = document.querySelector('.custom-toggler'); // SCSS dagi klassga moslab
+    const navCollapse = document.querySelector('.navbar-collapse');
 
-    if (menuToggle && navMenu) {
+    if (menuToggle && navCollapse) {
         menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            navCollapse.classList.toggle('show');
 
-            // Ikonkani almashtirish: List -> X
-            if (navMenu.classList.contains('active')) {
-                menuIcon.classList.replace('bi-list', 'bi-x-lg');
-            } else {
-                menuIcon.classList.replace('bi-x-lg', 'bi-list');
-            }
+            // Body scrollni menyu ochiqligida to'xtatish
+            document.body.style.overflow = navCollapse.classList.contains('show') ? 'hidden' : '';
         });
 
-        // Menyu linklari bosilganda menyuni yopish
+        // Link bosilganda menyuni yopish
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                menuIcon.classList.replace('bi-x-lg', 'bi-list');
+                menuToggle.classList.remove('active');
+                navCollapse.classList.remove('show');
+                document.body.style.overflow = '';
             });
         });
     }
-});
+};
 
 // --- CONTACT FORM HANDLING ---
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+const handleContactForm = () => {
+    const contactForm = document.querySelector('.contact-form form');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const btn = contactForm.querySelector('button');
-        const originalText = btn.innerHTML;
+        const btn = contactForm.querySelector('.btn-primary');
+        const originalContent = btn.innerHTML;
 
-        btn.innerHTML = 'Sending Pulse... <i class="bi bi-hourglass-split"></i>';
-        btn.style.opacity = '0.7';
+        // Visual Feedback
+        btn.innerHTML = 'Sending... <i class="bi bi-hourglass-split"></i>';
         btn.style.pointerEvents = 'none';
+        btn.style.filter = 'grayscale(1)';
 
+        // Simulyatsiya (Haqiqiy backend bo'lsa fetch ishlatiladi)
         setTimeout(() => {
             btn.innerHTML = 'Sent Successfully! <i class="bi bi-check-all"></i>';
-            btn.style.background = '#00ff88';
-            btn.style.boxShadow = '0 0 20px #00ff88';
+            btn.style.filter = 'none';
+            btn.style.background = '#00ff88'; // Success green
             contactForm.reset();
 
             setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.opacity = '1';
-                btn.style.pointerEvents = 'all';
+                btn.innerHTML = originalContent;
                 btn.style.background = '';
-                btn.style.boxShadow = '';
+                btn.style.pointerEvents = 'all';
             }, 3000);
-        }, 2000);
+        }, 1500);
     });
-}
+};
+
+// --- BARCHASINI ISHGA TUSHIRISH ---
+document.addEventListener('DOMContentLoaded', () => {
+    initTypewriter('typewriter', ['Creative Developer', 'Full-stack Developer', 'UI/UX Designer']);
+    initCursor();
+    handleNavbarScroll();
+    initMobileMenu();
+    handleContactForm();
+});
