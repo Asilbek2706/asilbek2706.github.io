@@ -1,0 +1,123 @@
+/* --- ABOUT PAGE WRAPPER --- */
+.about-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding-top: 40px;
+}
+
+/* --- CIRCULAR IMAGE STYLES --- */
+.circle-container {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    flex-shrink: 0;
+}
+
+.profile-circle {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%; /* Makes it circular */
+    border: 8px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 2;
+}
+
+.rotating-border {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    border-radius: 50%;
+    border: 2px dashed #00f2fe;
+    animation: rotate 20s linear infinite;
+    z-index: 1;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.exp-badge {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #00f2fe, #7000ff);
+    color: #000;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 800;
+    z-index: 3;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+}
+
+/* --- TEXT CONTENT STYLES --- */
+.about-title {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+}
+
+.bio-lead {
+    font-size: 1.3rem;
+    color: #00f2fe;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.bio-story p {
+    color: #b0b0b0;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.stack-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.stack-grid span {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.stack-grid span:hover {
+    border-color: #00f2fe;
+    background: rgba(0, 242, 254, 0.05);
+    transform: translateX(5px);
+}
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 992px) {
+    .about-wrapper {
+        flex-direction: column;
+        text-align: center;
+        gap: 50px;
+    }
+
+    .stack-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .circle-container {
+        width: 280px;
+        height: 280px;
+    }
+    .about-title { font-size: 2.5rem; }
+}
