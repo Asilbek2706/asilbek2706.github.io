@@ -2,76 +2,100 @@
 @use '../abstracts/mixins' as m;
 
 .contact {
-    padding: 100px 0;
-    position: relative;
+    padding: 120px 0;
+    background: v.$bg-deep;
+}
 
-    .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 80px;
-        align-items: start;
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 100px;
+    align-items: center;
+
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
     }
 }
 
 .contact-info {
     h2 {
-        font-size: 3rem;
-        margin-bottom: 20px;
-        text-align: left;
+        font-size: 3.8rem;
+        font-weight: 800;
+        color: v.$text-main;
+        margin-bottom: 25px;
+
+        span {
+            background: v.$gradient;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     }
 
     p {
         color: v.$text-dim;
         font-size: 1.1rem;
-        margin-bottom: 40px;
+        margin-bottom: 45px;
     }
 
     .contact-methods {
         display: flex;
         flex-direction: column;
-        gap: 25px;
+        gap: 15px;
 
-        .method {
+        .method-card {
             display: flex;
             align-items: center;
             gap: 20px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid v.$glass-border;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            transition: v.$transition;
+            text-decoration: none;
+            transition: 0.3s ease;
 
-            i {
-                font-size: 1.5rem;
-                color: v.$primary;
-                filter: drop-shadow(0 0 8px v.$primary);
-            }
-
-            a, span {
-                color: v.$text-main;
-                text-decoration: none;
-                font-size: 1rem;
-                transition: 0.3s;
-            }
+            i { font-size: 1.4rem; color: v.$primary; }
+            h4 { margin: 0; color: v.$text-main; font-size: 1rem; font-weight: 400; }
 
             &:hover {
-                background: rgba(v.$primary, 0.05);
-                border-color: v.$primary;
-                transform: translateX(10px);
-                
-                a { color: v.$primary; }
+                border-color: rgba(v.$primary, 0.3);
+                background: rgba(v.$primary, 0.02);
+                transform: translateX(8px);
             }
         }
     }
 }
 
+// --- FORMA: SEN XOHLAGAN STILDA ---
 .contact-form {
-    background: v.$glass-bg;
-    backdrop-filter: blur(20px);
-    border: 1px solid v.$glass-border;
-    padding: 50px;
-    border-radius: 30px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    padding: 55px;
+    background: rgba(15, 15, 15, 0.8); // Toza qora emas, juda quyuq kulrang (Premium bg)
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 35px;
+    position: relative;
+    backdrop-filter: blur(10px);
+    transition: 0.5s ease;
+
+    // --- HOVER: STATIK YULDUZLI CHIROQ ---
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        background: radial-gradient(circle at top right, rgba(v.$primary, 0.4), transparent 70%);
+        border-radius: 36px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+    }
+
+    &:hover {
+        border-color: rgba(v.$primary, 0.2);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+
+        &::before {
+            opacity: 1; // Hover bo'lganda burchakda mayin nur paydo bo'ladi
+        }
+    }
 
     .form-group {
         margin-bottom: 25px;
@@ -79,62 +103,72 @@
 
         input, textarea {
             width: 100%;
-            padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid v.$glass-border;
+            padding: 18px 25px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             color: v.$text-main;
-            font-family: inherit;
             font-size: 1rem;
-            transition: v.$transition;
+            transition: 0.4s;
 
             &::placeholder {
-                color: rgba(255, 255, 255, 0.3);
+                color: rgba(255, 255, 255, 0.5); // Endi placeholder aniq ko'rinadi
             }
 
             &:focus {
                 outline: none;
                 border-color: v.$primary;
-                background: rgba(v.$primary, 0.02);
-                box-shadow: 0 0 15px rgba(v.$primary, 0.2);
+                background: rgba(v.$primary, 0.01);
             }
         }
 
-        textarea {
-            resize: none;
+        // --- CHAP TARAFDAGI NOZIK CHIROQLI CHIZIQ ---
+        &::after {
+            content: '';
+            position: absolute;
+            left: -1px; // Input chetida turadi
+            top: 50%;
+            width: 3px;
+            height: 0;
+            background: v.$primary;
+            transform: translateY(-50%);
+            box-shadow: 0 0 10px v.$primary;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0 4px 4px 0;
+        }
+
+        &:focus-within::after {
+            height: 25px; // Faqat fokusda chiqadi
         }
     }
 
     .btn-primary {
         width: 100%;
-        justify-content: center;
         padding: 18px;
+        background: v.$gradient;
+        border: none;
+        border-radius: 12px;
+        color: #fff;
+        font-weight: 700;
         font-size: 1.1rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
         cursor: pointer;
-        
-        i {
-            transition: 0.3s;
+        transition: 0.4s;
+
+        // Button doim korinarli
+        box-shadow: 0 10px 20px rgba(v.$primary, 0.2);
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(v.$primary, 0.4);
+            filter: brightness(1.1);
+
+            i { transform: translateX(5px); }
         }
 
-        &:hover i {
-            transform: translateX(5px) translateY(-5px);
-        }
-    }
-}
-
-@media (max-width: 992px) {
-    .contact .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 50px;
-    }
-    .contact-form {
-        padding: 30px;
-    }
-
-    .cursor-follower {
-        display: none;
-        visibility: hidden;
+        i { transition: 0.3s; }
     }
 }
