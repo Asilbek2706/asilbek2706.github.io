@@ -1,0 +1,34 @@
+// 1. Core / Abstracts
+@use 'abstract/variables' as v;
+@use 'abstract/functions' as f;
+@use 'abstract/mixins' as m;
+
+// 2. Components
+@use 'component/badge';
+@use 'component/project-card';
+
+// 3. Layout Parts
+@use 'layout/projects-header';
+@use 'layout/projects-grid';
+
+// Global Styles for Projects Page
+body {
+  background-color: v.$clr-bg;
+  color: v.$txt-main;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+// Helper: Custom scrollbar (ixtiyoriy, chiroyli chiqadi)
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: v.$clr-bg;
+}
+::-webkit-scrollbar-thumb {
+  background: f.clr-alpha(v.$clr-primary, 0.2);
+  border-radius: 10px;
+  &:hover { background: v.$clr-primary; }
+}
