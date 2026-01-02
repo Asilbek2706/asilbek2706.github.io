@@ -2,258 +2,259 @@
 @use '../projects/abstract/functions' as f;
 @use '../projects/abstract/mixins' as m;
 
-// 1. Kontakt Konteyneri
-.contact-container {
+.projects-container {
   max-width: v.$layout-max-width;
   margin: 0 auto;
   padding: f.rem(120px) f.rem(40px);
   position: relative;
+  background: v.$clr-bg;
 
-  @include m.respond-to("tablet") {
-    padding: f.rem(80px) f.rem(20px);
-  }
-}
-
-// 2. Orqa fondagi dinamik nurlanish
-.contact-bg-glow {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: f.rem(600px);
-  height: f.rem(600px);
-  background: radial-gradient(circle, f.clr-alpha(v.$clr-primary, 0.07) 0%, transparent 70%);
-  transform: translate(-50%, -50%);
-  filter: blur(100px);
-  z-index: -1;
-  pointer-events: none;
-  animation: float-glow 20s infinite alternate ease-in-out;
-}
-
-@keyframes float-glow {
-  from { transform: translate(-60%, -40%); }
-  to { transform: translate(-40%, -60%); }
-}
-
-// 3. Kontakt Grid (Chap va O'ng tomon)
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.8fr;
-  gap: f.rem(60px);
-  margin-top: f.rem(50px);
-
-  @include m.respond-to("tablet") {
-    grid-template-columns: 1fr;
-  }
-}
-
-// 4. Chap tomon: Info Kartalar
-.contact-info {
-  display: flex;
-  flex-direction: column;
-  gap: f.rem(25px);
-
-  .info-card {
-    background: v.$card-bg;
-    border: 1px solid v.$brd-color;
-    padding: f.rem(30px);
-    border-radius: f.rem(20px);
-    display: flex;
-    align-items: center;
-    gap: f.rem(20px);
-    transition: v.$tr-smooth;
-    text-decoration: none;
+  // --- HEADER SECTION ---
+  .projects-header {
     position: relative;
-    overflow: hidden;
+    margin-bottom: f.rem(100px);
 
-    // Hoverda chapdan chiqadigan neon chiziq
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 0;
-      height: 100%;
-      background: v.$clr-primary;
-      box-shadow: v.$fx-glow;
-      transition: width 0.3s ease;
-    }
-
-    i {
-      font-size: f.rem(30px);
-      color: v.$clr-primary;
-      filter: drop-shadow(v.$fx-glow);
-      transition: v.$tr-fast;
-    }
-
-    h4 { color: v.$txt-main; margin-bottom: 5px; font-size: f.rem(18px); }
-    p { color: v.$txt-body; margin: 0; font-size: f.rem(15px); }
-
-    &:hover {
+    .cyber-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: f.rem(12px);
+      padding: f.rem(8px) f.rem(20px);
       background: f.clr-alpha(v.$clr-primary, 0.05);
-      border-color: v.$clr-primary;
-      transform: translateX(10px);
+      border: 1px solid f.clr-alpha(v.$clr-primary, 0.2);
+      color: v.$clr-primary;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: f.rem(12px);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: f.rem(35px);
+      position: relative;
 
-      &::before { width: 4px; }
-      i { transform: scale(1.1); }
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        width: 6px; height: 6px;
+        border-color: v.$clr-primary;
+        border-style: solid;
+      }
+      &::before { top: -1px; left: -1px; border-width: 1.5px 0 0 1.5px; }
+      &::after { bottom: -1px; right: -1px; border-width: 0 1.5px 1.5px 0; }
+
+      i { font-size: f.rem(16px); filter: drop-shadow(v.$fx-glow); }
     }
-  }
 
-  .contact-status {
-    margin-top: f.rem(10px);
-    padding: f.rem(15px) f.rem(20px);
-    background: f.clr-alpha(#10b981, 0.05);
-    border: 1px solid f.clr-alpha(#10b981, 0.2);
-    border-radius: f.rem(12px);
-    color: #10b981;
-    font-size: f.rem(14px);
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: #10b981;
-      border-radius: 50%;
-      box-shadow: 0 0 10px #10b981;
-      animation: pulse 2s infinite;
-    }
-  }
-}
-
-// 5. O'ng tomon: Cyber Form
-.cyber-form {
-  background: v.$card-bg;
-  border: 1px solid v.$brd-color;
-  padding: f.rem(50px);
-  border-radius: f.rem(28px);
-  position: relative;
-
-  // Formaning chap burchagidagi dekorativ chiziq
-  &::after {
-    content: '';
-    position: absolute;
-    left: -1px;
-    top: 20%;
-    height: 60%;
-    width: 2px;
-    background: linear-gradient(to bottom, transparent, v.$clr-primary, transparent);
-    box-shadow: v.$fx-glow;
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: f.rem(25px);
-    @include m.respond-to("mobile") { grid-template-columns: 1fr; }
-  }
-
-  .input-group {
-    position: relative;
-    margin-bottom: f.rem(35px);
-
-    input, textarea {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid v.$brd-color;
-      border-radius: f.rem(12px);
-      padding: f.rem(20px) f.rem(15px) f.rem(10px);
+    .title {
+      font-size: f.rem(72px);
+      font-weight: 900;
       color: v.$txt-main;
-      font-size: f.rem(16px);
-      transition: all 0.3s ease;
+      line-height: 1.05;
+      margin-bottom: f.rem(25px);
+      letter-spacing: f.rem(-3px);
 
-      &::placeholder { color: transparent; }
-
-      &:focus {
-        outline: none;
-        background: f.clr-alpha(v.$clr-primary, 0.02);
-        border-color: f.clr-alpha(v.$clr-primary, 0.5);
+      .highlight {
+        @include m.text-gradient(linear-gradient(90deg, v.$clr-primary, v.$clr-secondary));
+        position: relative;
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: f.rem(10px); left: 0;
+          width: 40%; height: f.rem(3px);
+          background: v.$clr-primary;
+          box-shadow: v.$fx-glow;
+        }
       }
     }
 
-    label {
-      position: absolute;
-      left: f.rem(15px);
-      top: 50%;
-      transform: translateY(-50%);
-      color: v.$txt-muted;
-      pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    .header-intro {
+      max-width: f.rem(650px);
+      font-size: f.rem(18px);
+      color: v.$txt-body;
+      line-height: 1.8;
+      margin-bottom: f.rem(45px);
+      border-left: 2px solid f.clr-alpha(v.$clr-primary, 0.1);
+      padding-left: f.rem(25px);
+    }
+
+    .header-line {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: f.rem(20px);
 
-      i { font-size: f.rem(18px); transition: 0.3s; }
-    }
+      &::before {
+        content: '';
+        height: 1px;
+        flex-grow: 1;
+        background: linear-gradient(90deg, v.$clr-primary, transparent);
+        box-shadow: v.$fx-glow;
+      }
 
-    textarea ~ label { top: f.rem(25px); transform: none; }
-
-    // Floating Logic
-    input:focus ~ label,
-    input:not(:placeholder-shown) ~ label,
-    textarea:focus ~ label,
-    textarea:not(:placeholder-shown) ~ label {
-      top: f.rem(-12);
-      left: f.rem(10px);
-      font-size: f.rem(13px);
-      color: v.$clr-primary;
-      font-weight: 700;
-      background: v.$clr-bg;
-      padding: 0 f.rem(8px);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-
-      i { color: v.$clr-primary; transform: scale(1.1); }
-    }
-
-    // Pastki neon chiziq effekti
-    .input-border-glow {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: v.$clr-primary;
-      box-shadow: v.$fx-glow;
-      transition: width 0.4s ease;
-    }
-
-    input:focus ~ .input-border-glow,
-    textarea:focus ~ .input-border-glow {
-      width: 100%;
-    }
-  }
-
-  .submit-btn {
-    width: 100%;
-    background: v.$clr-primary;
-    color: v.$clr-bg;
-    border: none;
-    padding: f.rem(20px);
-    border-radius: f.rem(14px);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: v.$tr-smooth;
-
-    i { font-size: f.rem(20px); transition: 0.3s; }
-
-    &:hover {
-      box-shadow: v.$fx-glow-strong;
-      transform: translateY(-5px);
-      i { transform: translateX(5px) rotate(-10deg); }
+      &::after {
+        content: 'SYSTEM_STABLE_v2.0';
+        font-family: 'JetBrains Mono', monospace;
+        font-size: f.rem(10px);
+        color: v.$clr-primary;
+        letter-spacing: 2px;
+        opacity: 0.6;
+      }
     }
   }
 }
 
-@keyframes pulse {
-  0% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.2); }
-  100% { opacity: 1; transform: scale(1); }
+// --- GRID SYSTEM ---
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: f.rem(40px);
+
+  @include m.respond-to("tablet") { grid-template-columns: 1fr; }
+}
+
+// --- CARD STYLING ---
+.p-card {
+  background: v.$card-bg;
+  border: 1px solid v.$brd-color;
+  border-radius: f.rem(24px);
+  padding: f.rem(45px);
+  position: relative;
+  transition: v.$tr-smooth;
+  display: flex;
+  flex-direction: column;
+  height: 100%; // Barcha cardlarni tenglashtiradi
+  overflow: hidden;
+
+  .p-card-icon {
+    position: absolute;
+    top: f.rem(40px);
+    right: f.rem(40px);
+    font-size: f.rem(40px);
+    color: v.$clr-primary;
+    opacity: 0.05;
+    transition: v.$tr-smooth;
+  }
+
+  &:hover {
+    transform: translateY(-10px);
+    border-color: v.$brd-hover;
+    background: v.$card-bg-hover;
+    box-shadow: v.$fx-shadow-card, v.$fx-glow;
+
+    .p-card-icon { opacity: 0.2; transform: rotate(15deg) scale(1.1); }
+    .p-link { background: v.$clr-primary; color: v.$clr-bg; box-shadow: v.$fx-glow-strong; }
+  }
+
+  .p-card-top {
+    display: flex;
+    align-items: center;
+    gap: f.rem(15px);
+    margin-bottom: f.rem(30px);
+
+    .p-year {
+      font-family: 'JetBrains Mono', monospace;
+      color: v.$clr-primary;
+      font-size: f.rem(14px);
+      font-weight: 700;
+      text-shadow: v.$fx-glow;
+    }
+
+    .p-cat {
+      font-size: f.rem(11px);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: v.$txt-muted;
+      padding: f.rem(4px) f.rem(12px);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid f.clr-alpha(v.$brd-color, 0.5);
+      border-radius: f.rem(4px);
+    }
+  }
+
+  .p-card-content {
+    h3 {
+      font-size: f.rem(32px);
+      font-weight: 800;
+      color: v.$txt-main;
+      margin-bottom: f.rem(15px);
+    }
+    .p-desc {
+      color: v.$txt-body;
+      font-size: f.rem(16px);
+      line-height: 1.7;
+      margin-bottom: f.rem(35px);
+    }
+  }
+
+  // Engineering Details Box
+  .p-details {
+    margin-bottom: f.rem(40px);
+    padding: f.rem(20px);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: f.rem(12px);
+    border-left: 3px solid f.clr-alpha(v.$clr-primary, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: f.rem(20px);
+
+    .p-detail-item {
+      font-size: f.rem(14px);
+      color: v.$txt-muted;
+      line-height: 1.5;
+
+      strong {
+        color: v.$clr-primary;
+        font-size: f.rem(11px);
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: f.rem(5px);
+        letter-spacing: 1.2px;
+      }
+    }
+  }
+
+  // Technology Stack
+  .p-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: f.rem(10px);
+    margin-top: auto; // Content kam bo'lsa ham pastga tushiradi
+    margin-bottom: f.rem(40px);
+    align-items: center;
+
+    i { color: v.$clr-primary; font-size: f.rem(20px); margin-right: f.rem(10px); }
+
+    span {
+      font-size: f.rem(12px);
+      color: v.$txt-main;
+      padding: f.rem(5px) f.rem(15px);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid v.$brd-color;
+      border-radius: f.rem(8px);
+      transition: v.$tr-fast;
+
+      &:hover {
+        border-color: v.$clr-primary;
+        color: v.$clr-primary;
+        background: f.clr-alpha(v.$clr-primary, 0.05);
+      }
+    }
+  }
+
+  // Action Button
+  .p-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: f.rem(12px);
+    padding: f.rem(18px);
+    border: 1px solid v.$clr-primary;
+    border-radius: f.rem(14px);
+    color: v.$clr-primary;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: f.rem(13px);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: v.$tr-smooth;
+
+    i { font-size: f.rem(20px); transition: 0.3s; }
+    &:hover i { transform: translateX(5px); }
+  }
 }

@@ -35,24 +35,6 @@ body {
   filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.3));
 }
 
-#star-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
-canvas#star-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  background: radial-gradient(circle at center, #0a0a1a 0%, #020205 100%);
-}
-
 .navbar {
   position: fixed;
   top: 0;
@@ -363,7 +345,7 @@ canvas#star-canvas {
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr 1fr;
   gap: 100px;
   align-items: center;
 }
@@ -628,10 +610,6 @@ canvas#star-canvas {
     gap: 30px;
     text-align: center;
   }
-  .cursor-follower {
-    display: none;
-    visibility: hidden;
-  }
 }
 .btn {
   text-decoration: none;
@@ -734,9 +712,6 @@ canvas#star-canvas {
   font-weight: 600;
   color: #ffffff;
   letter-spacing: 1px;
-}
-.skill-card {
-  /* --- PROGRESS BAR STYLES --- */
 }
 .skill-card .progress-bar {
   width: 100%;
