@@ -1,0 +1,248 @@
+@use '../projects/abstract/variables' as v;
+@use '../projects/abstract/functions' as f;
+@use '../projects/abstract/mixins' as m;
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
+
+$font-premium: 'Plus Jakarta Sans', sans-serif;
+$clr-bg: #030508;
+$clr-card: #090c12;
+$clr-accent: #00f2fe;
+$clr-text: #94a3b8;
+$clr-heading: #e2e8f0;
+
+// Silliqlik kaliti:
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+$transition-speed: 0.6s;
+
+.about-page {
+  font-family: $font-premium;
+  background-color: $clr-bg;
+  color: $clr-text;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 0% 0%, rgba($clr-accent, 0.04) 0%, transparent 40%);
+    pointer-events: none;
+  }
+}
+
+.section-padding {
+  padding: f.rem(180px) 0;
+  @include m.respond-to("tablet") { padding: f.rem(100px) 0; }
+}
+
+.about-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: f.rem(100px);
+  max-width: f.rem(1400px);
+  margin: 0 auto;
+  padding: 0 f.rem(40px);
+  position: relative;
+  z-index: 5;
+
+  @include m.respond-to("large") { gap: f.rem(60px); }
+  @include m.respond-to("tablet") {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.about-visual {
+  position: sticky;
+  top: f.rem(120px);
+  flex-shrink: 0;
+  will-change: transform;
+
+  .circle-container {
+    position: relative;
+    width: f.rem(450px);
+    height: f.rem(450px);
+    padding: f.rem(15px);
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 50%;
+    transition: $transition-speed $ease-smooth;
+
+    @include m.respond-to("large") { width: f.rem(380px); height: f.rem(380px); }
+    @include m.respond-to("mobile") { width: f.rem(300px); height: f.rem(300px); }
+
+    &:hover {
+      transform: scale(1.02) translateY(-5px);
+      background: rgba($clr-accent, 0.03);
+
+      .profile-circle { filter: saturate(1) contrast(1); }
+      .rotating-border { transform: rotate(180deg) scale(1.1); border-color: rgba($clr-accent, 0.4); }
+      .exp-badge { transform: translate(15px, -15px); background: $clr-accent; color: #000; }
+    }
+  }
+
+  .profile-circle {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    filter: saturate(0.6) contrast(1.1);
+    transition: $transition-speed $ease-smooth;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 2;
+    position: relative;
+  }
+
+  .rotating-border {
+    position: absolute;
+    inset: f.rem(-8px);
+    border: 1px solid rgba($clr-accent, 0.15);
+    border-radius: 50%;
+    z-index: 1;
+    transition: transform 1.2s $ease-smooth, border-color 0.6s ease;
+    pointer-events: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 15%;
+      right: 15%;
+      width: f.rem(10px);
+      height: f.rem(10px);
+      background: $clr-accent;
+      border-radius: 50%;
+      box-shadow: 0 0 15px $clr-accent;
+    }
+  }
+
+  .exp-badge {
+    position: absolute;
+    bottom: f.rem(50px);
+    right: f.rem(0px);
+    background: $clr-card;
+    border: 1px solid rgba($clr-accent, 0.3);
+    color: #fff;
+    padding: f.rem(18px) f.rem(28px);
+    border-radius: f.rem(100px);
+    font-weight: 800;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    transition: $transition-speed $ease-smooth;
+    z-index: 5;
+    backdrop-filter: blur(12px);
+
+    .year { font-size: f.rem(22px); display: block; line-height: 1; margin-top: 4px; }
+    &::before { content: 'EST.'; font-size: f.rem(10px); letter-spacing: 2px; opacity: 0.6; }
+  }
+}
+
+.about-content {
+  flex: 1;
+
+  .about-title {
+    font-size: clamp(f.rem(48px), 8vw, f.rem(92px));
+    font-weight: 800;
+    color: $clr-heading;
+    line-height: 1;
+    margin-bottom: f.rem(40px);
+    letter-spacing: f.rem(-4px);
+
+    .highlight {
+      background: linear-gradient(90deg, $clr-accent, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .bio-lead {
+    font-size: f.rem(20px);
+    color: $clr-accent;
+    font-weight: 500;
+    margin-bottom: f.rem(45px);
+    padding-left: f.rem(20px);
+    border-left: 2px solid rgba($clr-accent, 0.3);
+
+    @include m.respond-to("tablet") { border-left: none; padding-left: 0; }
+  }
+
+  .bio-story p {
+    font-size: f.rem(19px);
+    line-height: 1.85;
+    margin-bottom: f.rem(25px);
+    color: $clr-text;
+
+    .text-info { color: #fff !important; font-weight: 600; border-bottom: 1px solid $clr-accent; }
+    .highlight { color: #fff; font-weight: 500; }
+  }
+}
+
+.tech-stack {
+  margin-top: f.rem(70px);
+
+  .arsenal {
+    font-size: f.rem(13px);
+    text-transform: uppercase;
+    letter-spacing: f.rem(5px);
+    color: rgba(255, 255, 255, 0.25);
+    margin-bottom: f.rem(35px);
+  }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: f.rem(16px);
+    @include m.respond-to("mobile") { grid-template-columns: 1fr; }
+
+    span {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: f.rem(20px) f.rem(28px);
+      border-radius: f.rem(20px);
+      color: #fff;
+      font-size: f.rem(15px);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: $transition-speed $ease-smooth;
+      cursor: default;
+
+      i { font-size: f.rem(20px); color: $clr-accent; transition: 0.4s ease; opacity: 0.7; }
+
+      &:hover {
+        background: rgba($clr-accent, 0.05);
+        border-color: rgba($clr-accent, 0.3);
+        transform: translateX(10px);
+
+        i { transform: scale(1.2) rotate(10deg); opacity: 1; }
+      }
+    }
+  }
+}
+
+.container {
+  max-width: f.rem(1400px);
+  margin: 0 auto;
+}
+
+@include m.respond-to("tablet") {
+  .about-visual { position: relative; top: 0; margin-bottom: f.rem(50px); }
+  .about-content .about-title { letter-spacing: f.rem(-2px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .about-visual .rotating-border {
+    animation: slowRotate 25s linear infinite;
+  }
+}
+
+@keyframes slowRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Custom Scrollbar
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: $clr-bg; }
+::-webkit-scrollbar-thumb { background: #1a1e26; border-radius: 10px; &:hover { background: $clr-accent; } }
