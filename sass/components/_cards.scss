@@ -20,6 +20,12 @@
     }
 }
 
+@media screen and (max-width: 768px) {
+    .skills {
+        display: none;
+    }
+}
+
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

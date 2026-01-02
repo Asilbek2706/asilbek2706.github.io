@@ -1,8 +1,52 @@
 "use strict";
 
+/**
+ * 1. Typewriter Funksiyasi
+ * Bu funksiya berilgan element ichiga so'zlarni navbatma-navbat yozib beradi.
+ */
+const initTypewriter = (elementId, words) => {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+        const currentWord = words[wordIndex];
+
+        // Matnni kesish (yozish yoki o'chirish)
+        el.textContent = isDeleting
+            ? currentWord.substring(0, charIndex - 1)
+            : currentWord.substring(0, charIndex + 1);
+
+        charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+
+        // Tezlikni sozlash
+        let typeSpeed = isDeleting ? 50 : 150;
+
+        if (!isDeleting && charIndex === currentWord.length) {
+            isDeleting = true;
+            typeSpeed = 2000; // So'z yozib bo'lingach kutish
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            typeSpeed = 500; // Keyingi so'zga o'tishdan oldin kutish
+        }
+        setTimeout(type, typeSpeed);
+    }
+    type();
+};
+
+/**
+ * 2. Asosiy Logika (DOMContentLoaded)
+ */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. NAVBAR & TOGGLER MANTIQI ---
+    // --- TYPEWRITER CHAQIRISH ---
+    initTypewriter('typewriter', ['Frontend Developer', 'Junior ReactJS Engineer', 'UI/UX Designer', 'Freelancer']);
+
+    // --- NAVBAR & TOGGLER ---
     const navbar = document.querySelector('.navbar');
     const menuToggle = document.querySelector('.custom-toggler');
     const navCollapse = document.getElementById('asilbekNav');
@@ -23,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // Linklar bosilganda yopish
         document.querySelectorAll('.nav-link').forEach(link => {
             link.onclick = () => {
                 menuToggle.classList.remove('active');
@@ -33,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. SKILLS PROGRESS (1% MUAMMOSI YECHIMI) ---
+    // --- SKILLS PROGRESS ---
     const percentEls = document.querySelectorAll('.val');
     const skillObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -57,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     percentEls.forEach(el => skillObserver.observe(el));
 
-    // --- 3. FAQ TYPEWRITER & ACCORDION ---
+    // --- FAQ ACCORDION ---
     const faqQuestions = document.querySelectorAll('.faq-question');
     faqQuestions.forEach(btn => {
         btn.onclick = () => {
@@ -66,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const answerPara = item.querySelector('.answer-content p');
             const isActive = item.classList.contains('active');
 
-            // Boshqalarni yopish
             document.querySelectorAll('.faq-item').forEach(el => {
                 el.classList.remove('active');
                 el.querySelector('.faq-answer').style.maxHeight = null;
@@ -100,12 +142,14 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 
-    // --- 4. SCROLL EFFECT ---
+    // --- SCROLL NAVBAR EFFECT ---
     window.onscroll = () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+        if (navbar) {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         }
     };
 });

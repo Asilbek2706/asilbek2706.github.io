@@ -256,8 +256,16 @@ body {
   height: 30px;
 }
 .hero .hero-content .typewriter-container .cursor {
+  animation: blink 0.7s infinite;
   color: #00f2fe;
-  animation: blink 1s infinite;
+}
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 .hero .hero-content .hero-btns {
   display: flex;
@@ -330,12 +338,8 @@ body {
     justify-content: center;
   }
   .hero .hero-image-container .image-border {
-    width: 300px;
-    height: 300px;
-  }
-  .cursor-follower {
-    display: none !important;
-    visibility: hidden !important;
+    width: 230px;
+    height: 230px;
   }
 }
 .contact {
@@ -670,6 +674,11 @@ body {
   filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.3));
 }
 
+@media screen and (max-width: 768px) {
+  .skills {
+    display: none;
+  }
+}
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
