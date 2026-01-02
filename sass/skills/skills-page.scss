@@ -123,7 +123,7 @@ $bp-mobile: 768px;
         fill: none; stroke: $clr-primary; stroke-width: 6;
         stroke-linecap: round;
         // 40% hisobi: 2 * PI * R (45) = 282.7. 40% = 113.1
-        stroke-dasharray: 113, 283;
+        stroke-dasharray: 125, 283;
         filter: drop-shadow(0 0 10px $clr-primary);
       }
       .data-text {
