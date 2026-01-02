@@ -181,11 +181,12 @@ $transition-speed: 0.6s;
   margin-top: f.rem(70px);
 
   .arsenal {
-    font-size: f.rem(13px);
+    font-size: f.rem(20px);
     text-transform: uppercase;
     letter-spacing: f.rem(5px);
-    color: rgba(255, 255, 255, 0.25);
+    color: rgb(182, 130, 130);
     margin-bottom: f.rem(35px);
+    font-weight: 800;
   }
 
   .stack-grid {
