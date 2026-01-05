@@ -4,11 +4,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
 
-/**
- * ASILBEK.DEV - PREMIUM ABOUT SECTION
- * Professional Typography & Glassmorphism
- */
-
 $font-premium: 'Plus Jakarta Sans', sans-serif;
 $clr-bg: #030508;
 $clr-card: #090c12;
@@ -16,7 +11,6 @@ $clr-accent: #00f2fe;
 $clr-text: #94a3b8;
 $clr-heading: #e2e8f0;
 
-// Animatsiya va Silliqlik:
 $ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 $transition-speed: 0.6s;
 
@@ -28,7 +22,6 @@ $transition-speed: 0.6s;
   overflow-x: hidden;
   position: relative;
 
-  // Orqa fondagi futuristik nur
   &::before {
     content: '';
     position: absolute;
@@ -61,12 +54,11 @@ $transition-speed: 0.6s;
   }
 }
 
-// --- VISUAL PART (STICKY PROFILE) ---
+// --- VISUAL PART (STATIC & SOLID) ---
 .about-visual {
   position: sticky;
   top: f.rem(120px);
   flex-shrink: 0;
-  will-change: transform;
 
   .circle-container {
     position: relative;
@@ -75,29 +67,25 @@ $transition-speed: 0.6s;
     padding: f.rem(15px);
     background: rgba(255, 255, 255, 0.01);
     border-radius: 50%;
-    transition: $transition-speed $ease-smooth;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    transition: background 0.4s ease; // Faqat fon o'zgarishi
 
     @include m.respond-to("large") { width: f.rem(380px); height: f.rem(380px); }
     @include m.respond-to("mobile") { width: f.rem(300px); height: f.rem(300px); }
 
     &:hover {
-      transform: scale(1.02) translateY(-5px);
       background: rgba($clr-accent, 0.03);
+      // transform: scale(1.02) olib tashlandi - qimirlamaydi
 
       .profile-circle {
-        filter: saturate(1.1) contrast(1.1);
-        box-shadow: 0 0 30px rgba($clr-accent, 0.2);
+        filter: saturate(1) contrast(1.1); // Rasm qimirlamaydi, faqat rangi biroz ochiladi
       }
       .rotating-border {
-        transform: rotate(180deg) scale(1.08);
-        border-color: rgba($clr-accent, 0.5);
+        border-color: rgba($clr-accent, 0.4);
       }
       .exp-badge {
-        transform: translate(10px, -10px);
-        background: $clr-accent;
-        color: #000;
-        box-shadow: 0 15px 30px rgba($clr-accent, 0.3);
+        // transform: translate olib tashlandi - joyida turadi
+        border-color: $clr-accent;
       }
     }
   }
@@ -108,7 +96,7 @@ $transition-speed: 0.6s;
     object-fit: cover;
     border-radius: 50%;
     filter: saturate(0.6) contrast(1.1);
-    transition: $transition-speed $ease-smooth;
+    transition: filter 0.5s ease;
     border: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 2;
     position: relative;
@@ -117,24 +105,12 @@ $transition-speed: 0.6s;
   .rotating-border {
     position: absolute;
     inset: f.rem(-10px);
-    border: 1.5px dashed rgba($clr-accent, 0.2); // Texnik/Radar ko'rinishi
+    border: 1.5px dashed rgba($clr-accent, 0.15);
     border-radius: 50%;
     z-index: 1;
-    transition: transform 1.5s $ease-smooth, border-color 0.6s ease;
+    transition: border-color 0.6s ease;
     pointer-events: none;
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 15%;
-      right: 15%;
-      width: f.rem(12px);
-      height: f.rem(12px);
-      background: $clr-accent;
-      border-radius: 50%;
-      box-shadow: 0 0 15px $clr-accent;
-      animation: pulseGlow 2s infinite ease-in-out;
-    }
+    // Animation o'rniga statik turadi yoki juda sekin (ko'z ilg'amas) aylanadi
   }
 
   .exp-badge {
@@ -147,10 +123,10 @@ $transition-speed: 0.6s;
     padding: f.rem(18px) f.rem(28px);
     border-radius: f.rem(100px);
     font-weight: 800;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    transition: $transition-speed $ease-smooth;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     z-index: 5;
     backdrop-filter: blur(12px);
+    transition: all 0.4s ease; // Faqat rang o'zgarishi uchun
 
     .year { font-size: f.rem(22px); display: block; line-height: 1; margin-top: 4px; }
     &::before { content: 'EST.'; font-size: f.rem(10px); letter-spacing: 2px; opacity: 0.6; }
@@ -173,7 +149,6 @@ $transition-speed: 0.6s;
       background: linear-gradient(90deg, $clr-accent, #fff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 10px rgba($clr-accent, 0.3));
     }
   }
 
@@ -185,8 +160,6 @@ $transition-speed: 0.6s;
     padding-left: f.rem(20px);
     border-left: 3px solid;
     border-image: linear-gradient(to bottom, $clr-accent, transparent) 1;
-
-    @include m.respond-to("tablet") { border-left: none; padding-left: 0; }
   }
 
   .bio-story p {
@@ -200,7 +173,7 @@ $transition-speed: 0.6s;
   }
 }
 
-// --- TECH STACK (SKILLS) ---
+// --- TECH STACK ---
 .tech-stack {
   margin-top: f.rem(70px);
 
@@ -208,7 +181,7 @@ $transition-speed: 0.6s;
     font-size: f.rem(14px);
     text-transform: uppercase;
     letter-spacing: f.rem(5px);
-    color: rgba(255, 255, 255, 0.4); // To'g'irlandi
+    color: rgba(255, 255, 255, 0.4);
     margin-bottom: f.rem(35px);
     font-weight: 800;
   }
@@ -220,64 +193,29 @@ $transition-speed: 0.6s;
     @include m.respond-to("mobile") { grid-template-columns: 1fr; }
 
     span {
-      position: relative;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.05);
       padding: f.rem(20px) f.rem(28px);
-      border-radius: f.rem(20px);
+      border-radius: f.rem(12px); // Biroq jiddiyroq burchak
       color: #fff;
       font-size: f.rem(15px);
       font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: $transition-speed $ease-smooth;
-      overflow: hidden;
-      cursor: default;
+      transition: 0.3s ease;
 
-      i { font-size: f.rem(20px); color: $clr-accent; transition: 0.4s ease; opacity: 0.7; }
-
-      // Shine effekti
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0; left: -100%;
-        width: 100%; height: 100%;
-        background: linear-gradient(90deg, transparent, rgba($clr-accent, 0.08), transparent);
-        transition: 0.6s ease;
-      }
+      i { font-size: f.rem(20px); color: $clr-accent; opacity: 0.7; }
 
       &:hover {
         background: rgba($clr-accent, 0.05);
         border-color: rgba($clr-accent, 0.3);
-        transform: translateX(10px);
-
-        &::before { left: 100%; }
-        i { transform: scale(1.2) rotate(10deg); opacity: 1; }
+        // transform: translateX(10px) olib tashlandi
       }
     }
   }
 }
 
-// --- ANIMATIONS ---
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 10px $clr-accent, 0 0 20px $clr-accent; transform: scale(1); }
-  50% { box-shadow: 0 0 20px $clr-accent, 0 0 40px $clr-accent; transform: scale(1.2); }
-}
-
-@keyframes slowRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-// Global sozlamalar
-@media (prefers-reduced-motion: no-preference) {
-  .about-visual .rotating-border {
-    animation: slowRotate 30s linear infinite;
-  }
-}
-
 @include m.respond-to("tablet") {
   .about-visual { position: relative; top: 0; margin-bottom: f.rem(50px); }
-  .about-content .about-title { letter-spacing: f.rem(-2px); }
 }
