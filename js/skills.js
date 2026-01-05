@@ -19,8 +19,8 @@ const SkillsEngine = {
 
         if (!circleBar || !valDisplay) return;
 
-        const target = parseInt(valDisplay.textContent) || 40;
-        const circumference = 2 * Math.PI * 45; // 2 * PI * R (R=45) ≈ 283
+        const target = parseInt(valDisplay.textContent) || 45;
+        const circumference = 2 * Math.PI * 45;
 
         // Boshlang'ich holat
         circleBar.style.strokeDasharray = circumference;
