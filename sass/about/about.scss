@@ -1,221 +1,186 @@
-@use '../projects/abstract/variables' as v;
-@use '../projects/abstract/functions' as f;
-@use '../projects/abstract/mixins' as m;
+@use '../abstracts/variables' as v;
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
+/**
+ * ABOUT PAGE - ULTRA CLEAN CYBERNETIC STYLE
+ * Engineering Focus: Hover-driven geometry, no rotation.
+ * Features: Interactive Grid, 3D Hover, Glassmorphism.
+ */
 
-$font-premium: 'Plus Jakarta Sans', sans-serif;
-$clr-bg: #030508;
-$clr-card: #090c12;
-$clr-accent: #00f2fe;
-$clr-text: #94a3b8;
-$clr-heading: #e2e8f0;
-
-$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-$transition-speed: 0.6s;
+$clr-neon: #00f2fe;
+$clr-dark-edge: #0a0c10;
+$clr-glass-border: rgba(255, 255, 255, 0.08);
+$font-jakarta: 'Plus Jakarta Sans', sans-serif;
+$transition-logic: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
 .about-page {
-  font-family: $font-premium;
-  background-color: $clr-bg;
-  color: $clr-text;
-  width: 100%;
-  overflow-x: hidden;
+  background: #020408;
+  color: #e2e8f0;
+  font-family: $font-jakarta;
+  padding: clamp(80px, 12vh, 150px) 0;
   position: relative;
+  overflow: hidden;
 
+  // Background Grid System (Static & Clean)
   &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 0% 0%, rgba($clr-accent, 0.05) 0%, transparent 40%);
-    pointer-events: none;
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
   }
-}
-
-.section-padding {
-  padding: f.rem(180px) 0;
-  @include m.respond-to("tablet") { padding: f.rem(100px) 0; }
 }
 
 .about-wrapper {
-  display: flex;
-  align-items: flex-start;
-  gap: f.rem(100px);
-  max-width: f.rem(1400px);
-  margin: 0 auto;
-  padding: 0 f.rem(40px);
-  position: relative;
-  z-index: 5;
+  display: flex; gap: 100px; align-items: flex-start;
+  position: relative; z-index: 10;
 
-  @include m.respond-to("large") { gap: f.rem(60px); }
-  @include m.respond-to("tablet") {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  @media (max-width: 992px) {
+    flex-direction: column; align-items: center; gap: 60px;
   }
 }
 
-// --- VISUAL PART (STATIC & SOLID) ---
+// --- VISUAL ARCHITECTURE (NO ROTATION) ---
 .about-visual {
-  position: sticky;
-  top: f.rem(120px);
   flex-shrink: 0;
 
   .circle-container {
     position: relative;
-    width: f.rem(450px);
-    height: f.rem(450px);
-    padding: f.rem(15px);
-    background: rgba(255, 255, 255, 0.01);
-    border-radius: 50%;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-    transition: background 0.4s ease; // Faqat fon o'zgarishi
+    width: 380px; height: 380px;
+    background: $clr-dark-edge;
+    border-radius: 40px; // Aylanadan voz kechib, modern burchakli radiusga o'tdik
+    padding: 10px;
+    border: 1px solid $clr-glass-border;
+    transition: $transition-logic;
 
-    @include m.respond-to("large") { width: f.rem(380px); height: f.rem(380px); }
-    @include m.respond-to("mobile") { width: f.rem(300px); height: f.rem(300px); }
+    // Static Geometric Decoration
+    &::before, &::after {
+      content: ''; position: absolute;
+      width: 40px; height: 40px;
+      border: 2px solid $clr-neon;
+      transition: $transition-logic;
+    }
+    &::before { top: -10px; left: -10px; border-right: 0; border-bottom: 0; }
+    &::after { bottom: -10px; right: -10px; border-left: 0; border-top: 0; }
+
+    .profile-circle {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 32px;
+      filter: saturate(0.8);
+      transition: $transition-logic;
+      opacity: 0; // JS orqali silliq ochiladi
+
+      &.loaded { opacity: 1; }
+    }
+
+    .exp-badge {
+      position: absolute; bottom: 30px; left: -20px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid $clr-neon;
+      padding: 12px 24px; border-radius: 12px;
+      display: flex; flex-direction: column;
+
+      .year { font-weight: 900; color: $clr-neon; font-size: 1.5rem; line-height: 1; }
+      &::after { content: 'EST. SINCE'; font-size: 0.6rem; letter-spacing: 2px; color: #475569; }
+    }
 
     &:hover {
-      background: rgba($clr-accent, 0.03);
-      // transform: scale(1.02) olib tashlandi - qimirlamaydi
+      transform: translateY(-10px);
+      border-color: rgba($clr-neon, 0.5);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
 
-      .profile-circle {
-        filter: saturate(1) contrast(1.1); // Rasm qimirlamaydi, faqat rangi biroz ochiladi
-      }
-      .rotating-border {
-        border-color: rgba($clr-accent, 0.4);
-      }
-      .exp-badge {
-        // transform: translate olib tashlandi - joyida turadi
-        border-color: $clr-accent;
-      }
+      &::before { top: 10px; left: 10px; }
+      &::after { bottom: 10px; right: 10px; }
+
+      .profile-circle { filter: saturate(1.1); transform: scale(1.02); }
     }
-  }
-
-  .profile-circle {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    filter: saturate(0.6) contrast(1.1);
-    transition: filter 0.5s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    z-index: 2;
-    position: relative;
-  }
-
-  .rotating-border {
-    position: absolute;
-    inset: f.rem(-10px);
-    border: 1.5px dashed rgba($clr-accent, 0.15);
-    border-radius: 50%;
-    z-index: 1;
-    transition: border-color 0.6s ease;
-    pointer-events: none;
-    // Animation o'rniga statik turadi yoki juda sekin (ko'z ilg'amas) aylanadi
-  }
-
-  .exp-badge {
-    position: absolute;
-    bottom: f.rem(50px);
-    right: f.rem(0px);
-    background: $clr-card;
-    border: 1px solid rgba($clr-accent, 0.3);
-    color: #fff;
-    padding: f.rem(18px) f.rem(28px);
-    border-radius: f.rem(100px);
-    font-weight: 800;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    z-index: 5;
-    backdrop-filter: blur(12px);
-    transition: all 0.4s ease; // Faqat rang o'zgarishi uchun
-
-    .year { font-size: f.rem(22px); display: block; line-height: 1; margin-top: 4px; }
-    &::before { content: 'EST.'; font-size: f.rem(10px); letter-spacing: 2px; opacity: 0.6; }
   }
 }
 
-// --- CONTENT PART ---
+// --- CONTENT ARCHITECTURE ---
 .about-content {
-  flex: 1;
+  .highlight {
+    background: linear-gradient(90deg, #fff, $clr-neon);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+  }
 
   .about-title {
-    font-size: clamp(f.rem(48px), 8vw, f.rem(92px));
-    font-weight: 800;
-    color: $clr-heading;
-    line-height: 0.95;
-    margin-bottom: f.rem(40px);
-    letter-spacing: f.rem(-4px);
-
-    .highlight {
-      background: linear-gradient(90deg, $clr-accent, #fff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    font-size: 4rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 20px;
   }
 
   .bio-lead {
-    font-size: f.rem(20px);
-    color: $clr-accent;
-    font-weight: 500;
-    margin-bottom: f.rem(45px);
-    padding-left: f.rem(20px);
-    border-left: 3px solid;
-    border-image: linear-gradient(to bottom, $clr-accent, transparent) 1;
+    font-size: 1.25rem; color: $clr-neon; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 3px;
+    margin-bottom: 35px; display: block;
+
+    &::before { content: '// '; opacity: 0.5; }
   }
 
-  .bio-story p {
-    font-size: f.rem(19px);
-    line-height: 1.85;
-    margin-bottom: f.rem(25px);
-    color: $clr-text;
+  .bio-story {
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 2px solid $clr-glass-border;
+    padding: 30px; border-radius: 0 20px 20px 0;
+    margin-bottom: 45px;
+    transition: $transition-logic;
 
-    .text-info { color: #fff !important; font-weight: 600; border-bottom: 1px solid $clr-accent; }
-    .highlight { color: #fff; font-weight: 500; }
-  }
-}
+    p { font-size: 1.15rem; line-height: 1.8; color: #94a3b8; margin: 0; }
 
-// --- TECH STACK ---
-.tech-stack {
-  margin-top: f.rem(70px);
-
-  .arsenal {
-    font-size: f.rem(14px);
-    text-transform: uppercase;
-    letter-spacing: f.rem(5px);
-    color: rgba(255, 255, 255, 0.4);
-    margin-bottom: f.rem(35px);
-    font-weight: 800;
+    &:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-left-color: $clr-neon;
+    }
   }
 
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: f.rem(16px);
-    @include m.respond-to("mobile") { grid-template-columns: 1fr; }
+  // ARSENAL GRID (INTERACTIVE)
+  .tech-stack {
+    .arsenal {
+      font-size: 1.3rem; letter-spacing: 5px; color: linear-gradient(90deg, #fff, $clr-neon);
+      display: block; margin-bottom: 25px;
+    }
 
-    span {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: f.rem(20px) f.rem(28px);
-      border-radius: f.rem(12px); // Biroq jiddiyroq burchak
-      color: #fff;
-      font-size: f.rem(15px);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: 0.3s ease;
+    .stack-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
+      @media (max-width: 576px) { grid-template-columns: 1fr 1fr; }
 
-      i { font-size: f.rem(20px); color: $clr-accent; opacity: 0.7; }
+      span {
+        padding: 16px 20px; border-radius: 14px;
+        background: #0f172a; border: 1px solid $clr-glass-border;
+        display: flex; align-items: center; gap: 12px;
+        font-weight: 700; font-size: 0.95rem; color: #cbd5e1;
+        transition: $transition-logic;
+        position: relative; overflow: hidden;
 
-      &:hover {
-        background: rgba($clr-accent, 0.05);
-        border-color: rgba($clr-accent, 0.3);
-        // transform: translateX(10px) olib tashlandi
+        &::before {
+          content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 0;
+          background: $clr-neon; transition: $transition-logic;
+        }
+
+        i { transition: $transition-logic; font-size: 1.2rem; }
+
+        &:hover {
+          background: #1e293b; color: #fff;
+          transform: translateX(8px);
+          border-color: rgba($clr-neon, 0.3);
+
+          &::before { height: 100%; }
+          i { transform: scale(1.2); color: $clr-neon; }
+        }
       }
     }
   }
 }
 
-@include m.respond-to("tablet") {
-  .about-visual { position: relative; top: 0; margin-bottom: f.rem(50px); }
+// --- SKELETON LOAD (Rasm ochilgunicha turadigan joy) ---
+.circle-container.loading {
+  background: linear-gradient(90deg, #0a0c10 25%, #161b22 50%, #0a0c10 75%);
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.5s infinite;
+}
+
+@keyframes skeletonPulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
