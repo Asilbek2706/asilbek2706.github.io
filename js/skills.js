@@ -1,6 +1,6 @@
 /**
- * ASILBEK.DEV - SKILLS ENGINE LOGIC
- * Manages: Progress counters, Circular Bars, and Interactive Effects.
+ * ASILBEK.DEV - SKILLS ENGINE LOGIC v2.5
+ * Refined: Performance & Mobile Compatibility
  */
 
 "use strict";
@@ -16,66 +16,86 @@ const SkillsEngine = {
     handleProgressBars() {
         const circleBar = document.querySelector('.main-panel .bar');
         const valDisplay = document.querySelector('.main-panel .val');
+        const circleContainer = document.querySelector('.cyber-circle');
 
-        if (!circleBar || !valDisplay) return;
+        if (!circleBar || !valDisplay || !circleContainer) return;
 
-        const target = parseInt(valDisplay.textContent) || 45;
-        const circumference = 2 * Math.PI * 45;
+        // SVG radiusiga qarab aylanani aniq hisoblash
+        const radius = circleBar.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
 
-        // Boshlang'ich holat
-        circleBar.style.strokeDasharray = circumference;
+        // Boshlang'ich holatni o'rnatish
+        circleBar.style.strokeDasharray = `${circumference} ${circumference}`;
         circleBar.style.strokeDashoffset = circumference;
+
+        const target = parseInt(valDisplay.getAttribute('data-target')) || parseInt(valDisplay.textContent) || 45;
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Animatsiyani boshlash
+                    // Kichik kechikish bilan animatsiyani boshlash
                     setTimeout(() => {
                         const offset = circumference - (target / 100) * circumference;
+                        circleBar.style.transition = 'stroke-dashoffset 2.5s cubic-bezier(0.22, 1, 0.36, 1)';
                         circleBar.style.strokeDashoffset = offset;
                         this.animateNumber(valDisplay, 0, target, 2500);
-                    }, 400);
+                    }, 300);
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.3 }); // 30% ko'rinsa yetarli
 
-        observer.observe(document.querySelector('.cyber-circle'));
+        observer.observe(circleContainer);
     },
 
-    // RAQAMLARNI 0 DAN SANASH
+    // RAQAMLARNI SILLIQ SANASH
     animateNumber(element, start, end, duration) {
         let startTime = null;
         const step = (timestamp) => {
             if (!startTime) startTime = timestamp;
             const progress = Math.min((timestamp - startTime) / duration, 1);
-            element.textContent = Math.floor(progress * (end - start) + start);
+
+            // "Easing" effekti qo'shish (out-expo)
+            const easeOutProgress = 1 - Math.pow(2, -10 * progress);
+            element.textContent = Math.floor(easeOutProgress * (end - start) + start);
+
             if (progress < 1) {
                 window.requestAnimationFrame(step);
+            } else {
+                element.textContent = end; // Yakuniy raqam aniq chiqishi uchun
             }
         };
         window.requestAnimationFrame(step);
     },
 
-    // 2. KURSORNI KUZATUVCHI NEON NUR
+    // 2. KURSORNI KUZATUVCHI NEON NUR (Optimallashtirildi)
     handleCursorGlow() {
         const glow = document.querySelector('.cursor-glow-engine');
-        if (!glow || window.matchMedia("(pointer: coarse)").matches) return;
+        // Agar mobil qurilma bo'lsa yoki element bo'lmasa ishlamaydi
+        if (!glow || window.matchMedia("(pointer: coarse)").matches) {
+            if(glow) glow.style.display = 'none';
+            return;
+        }
 
+        // Mousemove eventini throttle qilish unumdorlikni oshiradi
         window.addEventListener('mousemove', (e) => {
-            glow.style.transform = `translate(${e.clientX - 300}px, ${e.clientY - 300}px)`;
-        });
+            // requestAnimationFrame brauzerga yuklamani kamaytiradi
+            window.requestAnimationFrame(() => {
+                glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            });
+        }, { passive: true });
     },
 
-    // 3. KARTALARDAGI MAGNETIC LIGHT (CSS Variable orqali)
+    // 3. KARTALARDAGI MAGNETIC LIGHT
     handleMagneticCards() {
         const cards = document.querySelectorAll('.cyber-panel');
+        if (window.matchMedia("(pointer: coarse)").matches) return;
 
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
-                const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+                const x = ((e.clientX - rect.left) / card.offsetWidth) * 100;
+                const y = ((e.clientY - rect.top) / card.offsetHeight) * 100;
 
                 card.style.setProperty('--x', `${x}%`);
                 card.style.setProperty('--y', `${y}%`);
@@ -84,11 +104,4 @@ const SkillsEngine = {
     }
 };
 
-// DOM yuklanganda ishga tushirish
-document.addEventListener('DOMContentLoaded', () => {
-    SkillsEngine.init();
-
-    // Roadmap status logging for DevTools
-    const activeStatus = document.querySelector('.step.active strong')?.textContent;
-    console.log(`%c [SYSTEM]: Skill Phase Active: ${activeStatus}`, 'color: #00f2fe; font-weight: bold;');
-});
+document.addEventListener('DOMContentLoaded', () => SkillsEngine.init());
