@@ -86,7 +86,6 @@ const SkillsEngine = {
         }, { passive: true });
     },
 
-    // 3. KARTALARDAGI MAGNETIC LIGHT
     handleMagneticCards() {
         const cards = document.querySelectorAll('.cyber-panel');
         if (window.matchMedia("(pointer: coarse)").matches) return;
