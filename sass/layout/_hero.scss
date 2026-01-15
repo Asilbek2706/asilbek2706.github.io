@@ -1,37 +1,102 @@
-.hero {
-    display: flex;
-    align-items: center;
-    min-height: 90vh;
+@use "../abstracts/variables" as v;
 
-    .hero-grid {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 50px;
-        align-items: center;
+.profile-main {
+    position: sticky;
+    top: 120px;
+    z-index: 10;
+    background: v.$bg-glass;
+    backdrop-filter: blur(15px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 28px;
+    // Tilt effekti o'rniga oddiy va silliq transform
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 
-        @media (max-width: 992px) {
-            grid-template-columns: 1fr;
-            text-align: center;
+    .img-wrapper {
+        border-radius: 20px;
+        background: #f1f3f5;
+        overflow: hidden;
+
+        .profile-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            filter: grayscale(20%);
+
+            &:hover {
+                transform: scale(1.08);
+                filter: grayscale(0%);
+            }
         }
     }
 
-    .glitch-text {
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 800;
-        margin-bottom: 20px;
+    .profile-info {
+        h2 { letter-spacing: -0.5px; }
+        p b { color: v.$primary-color; }
     }
 
-    .my-photo {
-        width: 100%;
-        max-width: 400px;
-        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; // Organik shakl
-        border: 4px solid $primary-color;
-        box-shadow: 0 0 50px rgba($primary-color, 0.2);
-        transition: 0.5s ease;
-
+    // Tugmalar
+    .shadow-blue {
+        background: v.$primary-color;
+        border: none;
+        box-shadow: 0 10px 20px rgba(v.$primary-color, 0.2);
         &:hover {
-            border-radius: 50%;
-            box-shadow: 0 0 70px rgba($primary-color, 0.4);
+            background: v.$text-dark;
+            transform: translateY(-2px);
         }
+    }
+
+    // --- Profile Social Links (Footer stilida) ---
+    .social-links {
+        display: flex;
+        justify-content: flex-start;
+        gap: 12px; // Tugmalar orasidagi masofa
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+
+        .social-icon {
+            width: 70px;            // O'lchamini biroz ixchamlashtirdim
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            color: v.$text-dark;
+            border-radius: 12px;    // Burchaklarni biroz o'tkirroq qildim
+            border: 1px solid v.$text-dark;
+            transition: all 0.3s ease;
+
+            i {
+                font-size: 1.2rem;
+                transition: transform 0.3s ease;
+            }
+
+            &:hover {
+                background: v.$text-dark; // Hoverda qora fon
+                color: v.$white;         // Oq belgi
+                transform: translateY(-5px); // Faqat yuqoriga siljish
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+                i {
+                    transform: scale(1.1); // Belgi biroz kattalashadi
+                }
+            }
+
+            &:active {
+                transform: translateY(-2px);
+            }
+        }
+
+        @media (max-width: 991px) {
+            justify-content: center;
+            gap: 10px;
+        }
+    }
+
+    // RWD: Mobil holatda sticky o'chiriladi
+    @media (max-width: 991px) {
+        position: relative;
+        top: 0;
+        margin-bottom: 30px;
     }
 }

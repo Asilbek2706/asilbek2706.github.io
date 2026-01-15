@@ -1,27 +1,35 @@
 "use strict";
 
-document.addEventListener('DOMContentLoaded', () => {
-    const navContainer = document.querySelector('.nav-container');
-    const navLinks = document.querySelectorAll('.nav-link');
+const HomeApp = {
+    init() {
+        this.navbarScrollEffect();
+        this.activeLinkHandler();
+    },
 
-    // 1. Scroll effekti (Navbar ixchamlashtirish)
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navContainer.style.padding = '8px 20px';
-            navContainer.style.background = 'rgba(255, 255, 255, 0.85)';
-            navContainer.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.08)';
-        } else {
-            navContainer.style.padding = '12px 28px';
-            navContainer.style.background = 'rgba(255, 255, 255, 0.7)';
-            navContainer.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.04)';
-        }
-    }, { passive: true });
+    navbarScrollEffect() {
+        const navContainer = document.querySelector('.nav-container');
 
-    // 2. Active linkni dinamik almashtirish (Click orqali)
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
+        if (!navContainer) return;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navContainer.classList.add('scrolled');
+            } else {
+                navContainer.classList.remove('scrolled');
+            }
+        }, { passive: true });
+    },
+
+    activeLinkHandler() {
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
-    });
-});
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => HomeApp.init());
