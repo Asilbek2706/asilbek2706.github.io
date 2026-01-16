@@ -60,15 +60,16 @@
   letter-spacing: 0.5px;
 }
 .about-bento-grid .bio-card .about-title {
-  font-size: 56px;
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -3px;
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 1.6;
+  letter-spacing: 0;
   margin: 0 0 20px 0;
-  color: #0f172a;
+  color: #232323;
 }
 .about-bento-grid .bio-card .about-title .highlight {
   color: #4770ff;
+  line-height: 1.6;
 }
 .about-bento-grid .bio-card .bio-lead {
   font-size: 22px;
