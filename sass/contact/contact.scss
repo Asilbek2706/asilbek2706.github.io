@@ -1,267 +1,415 @@
-@use '../projects/abstract/variables' as v;
-@use '../projects/abstract/functions' as f;
-@use '../projects/abstract/mixins' as m;
+@use "../abstracts/variables" as v;
 
-// 1. Background Visual Effects
-.contact-bg-glow {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: f.rem(500px);
-  height: f.rem(500px);
-  background: radial-gradient(circle, f.clr-alpha(v.$clr-primary, 0.05) 0%, transparent 70%);
-  transform: translate(-50%, -50%);
-  filter: blur(80px);
-  z-index: -1;
-  pointer-events: none;
-  animation: bg-move 15s infinite alternate ease-in-out;
-}
-
-// 2. Layout Structure
 .contact-container {
-  max-width: v.$layout-max-width;
-  margin: 0 auto;
-  padding: f.rem(120px) f.rem(40px);
+  position: relative;
+  background: #ffffff;
+  border-radius: 48px;
+  padding: 60px;
+  border: 1px solid #f1f5f9;
+  z-index: 1;
+  box-shadow: 0 40px 100px rgba(15, 23, 42, 0.03);
 
-  @include m.respond-to("tablet") {
-    padding: f.rem(80px) f.rem(20px);
+  .contact-bg-glow {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(v.$primary-color, 0.06) 0%, transparent 70%);
+    z-index: -1;
+    filter: blur(60px);
+    pointer-events: none;
   }
 }
 
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.8fr;
-  gap: f.rem(60px);
-  margin-top: f.rem(40px);
+.section-header {
+  margin-bottom: 50px;
+  position: relative;
 
-  @include m.respond-to("tablet") {
-    grid-template-columns: 1fr;
-  }
-}
-
-// 3. Contact Information Cards
-.contact-info {
-  display: flex;
-  flex-direction: column;
-  gap: f.rem(25px);
-
-  .info-card {
-    background: v.$card-bg;
-    border: 1px solid v.$brd-color;
-    padding: f.rem(25px);
-    border-radius: f.rem(16px);
-    display: flex;
+  .cyber-badge {
+    display: inline-flex;
     align-items: center;
-    gap: f.rem(20px);
-    transition: v.$tr-smooth;
-    text-decoration: none;
+    gap: 10px;
+    padding: 10px 22px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    color: v.$primary-color;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
 
     i {
-      font-size: f.rem(28px);
-      color: v.$clr-primary;
-      filter: drop-shadow(v.$fx-glow);
+      font-size: 16px;
+    }
+  }
+
+  .title {
+    font-size: 68px;
+    font-weight: 950;
+    letter-spacing: -4px;
+    color: #0f172a;
+    line-height: 0.9;
+    margin: 0 0 25px 0;
+
+    .highlight {
+      color: v.$primary-color;
+      position: relative;
+      z-index: 1;
+
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+        background: rgba(v.$primary-color, 0.1);
+        z-index: -1;
+      }
+    }
+  }
+
+  .header-intro {
+    font-size: 19px;
+    color: #64748b;
+    max-width: 580px;
+    line-height: 1.6;
+    font-weight: 450;
+  }
+}
+
+.bento-contact-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+}
+
+.bento-info-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .bento-card-mini {
+    background: #fcfdfe;
+    border: 1px solid #f1f5f9;
+    padding: 24px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(v.$primary-color, 0.04) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    i {
+      font-size: 24px;
+      color: v.$primary-color;
+      background: #ffffff;
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+      z-index: 1;
+      transition: all 0.5s ease;
     }
 
     div {
-      h4 { color: v.$txt-main; margin-bottom: 5px; font-size: f.rem(18px); }
-      p { color: v.$txt-body; margin: 0; font-size: f.rem(15px); }
+      z-index: 1;
+      span {
+        display: block;
+        font-size: 10px;
+        color: #94a3b8;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 3px;
+      }
+
+      p {
+        font-size: 15px;
+        color: #1e293b;
+        font-weight: 700;
+        margin: 0;
+      }
     }
 
-    &:hover {
-      border-color: v.$clr-primary;
-      transform: translateX(10px);
-      background: f.clr-alpha(v.$clr-primary, 0.05);
-      color: inherit;
+    &.clickable:hover {
+      background: #ffffff;
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(v.$primary-color, 0.2);
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.06);
+
+      &::after {
+        opacity: 1;
+      }
+
+      i {
+        background: v.$primary-color;
+        color: #ffffff;
+        transform: rotate(-10deg) scale(1.1);
+      }
     }
-  }
 
-  .contact-status {
-    margin-top: f.rem(20px);
-    padding: f.rem(15px);
-    background: f.clr-alpha(#10b981, 0.1);
-    border: 1px solid f.clr-alpha(#10b981, 0.2);
-    border-radius: f.rem(10px);
-    color: #10b981;
-    font-weight: 600;
-    font-size: f.rem(14px);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    &.status {
+      margin-top: auto;
+      background: #f0fdf4;
+      border: 1px dashed #22c55e;
+      justify-content: center;
+      padding: 18px;
 
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      background: #10b981;
-      border-radius: 50%;
-      box-shadow: 0 0 10px #10b981;
-      animation: pulse 2s infinite;
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        background: #22c55e;
+        border-radius: 50%;
+        margin-right: 12px;
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          inset: -4px;
+          border: 2px solid #22c55e;
+          border-radius: 50%;
+          animation: status-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+      }
+
+      p {
+        color: #15803d;
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
     }
   }
 }
 
-// 4. Cyberpunk Form Styling
-// 4. Cyberpunk Form Styling
-.cyber-form {
-  background: v.$card-bg;
-  border: 1px solid v.$brd-color;
-  padding: f.rem(45px);
-  border-radius: f.rem(24px);
-  position: relative;
-  transition: v.$tr-smooth;
-
-  // Static vertical accent line
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 10%;
-    height: 80%;
-    width: 3px;
-    background: v.$clr-primary;
-    box-shadow: v.$fx-glow;
-  }
-
-  &:hover {
-    border-color: f.clr-alpha(v.$clr-primary, 0.3);
-    box-shadow: 0 0 f.rem(30px) f.clr-alpha(v.$clr-primary, 0.05);
-    transform: translateY(f.rem(-5px)); // Subtle lift effect
-  }
-
-  .form-row {
+.bento-form {
+  .bento-input-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: f.rem(20px);
-    @include m.respond-to("mobile") { grid-template-columns: 1fr; }
-  }
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 20px;
 
-}
+    .input-bento-cell {
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      padding: 20px 28px;
+      border-radius: 32px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+      position: relative;
 
-// 5. Interactive Input Groups
-.input-group {
-  position: relative;
-  margin-top: f.rem(25px);
-  margin-bottom: f.rem(30px);
+      label {
+        font-size: 11px;
+        font-weight: 900;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
 
-  // Dynamic left border on hover/focus
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 3px;
-    height: 0;
-    background: v.$clr-primary;
-    box-shadow: v.$fx-glow;
-    transition: height 0.3s ease;
-    z-index: 10;
-  }
+        i {
+          color: v.$primary-color;
+          font-size: 16px;
+          opacity: 0.7;
+        }
+      }
 
-  &:hover::after,
-  &:focus-within::after {
-    height: 100%;
-  }
+      input,
+      textarea {
+        background: transparent;
+        border: none;
+        font-size: 16px;
+        font-weight: 650;
+        color: #0f172a;
+        width: 100%;
+        padding: 0;
+        font-family: inherit;
 
-  input, textarea {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid v.$brd-color;
-    border-radius: f.rem(12px);
-    padding: f.rem(15px);
-    color: v.$txt-main;
-    transition: v.$tr-fast;
-    display: block;
+        &::placeholder {
+          color: #cbd5e1;
+          font-weight: 500;
+        }
 
-    &::placeholder { color: transparent; }
+        &:focus {
+          outline: none;
+        }
+      }
 
-    &:focus {
-      outline: none;
-      border-color: v.$clr-primary;
+      textarea {
+        resize: none;
+        min-height: 100px;
+      }
+
+      &:focus-within {
+        background: #ffffff;
+        border-color: v.$primary-color;
+        transform: scale(1.01);
+        box-shadow: 0 20px 40px rgba(v.$primary-color, 0.05);
+
+        label {
+          color: v.$primary-color;
+          i {
+            opacity: 1;
+            animation: icon-float 2s ease-in-out infinite;
+          }
+        }
+      }
+
+      &.name {
+        grid-column: 1;
+      }
+      &.email {
+        grid-column: 2;
+      }
+      &.subject {
+        grid-column: 1 / span 2;
+      }
+      &.message {
+        grid-column: 1 / span 2;
+      }
+    }
+
+    .bento-submit {
+      grid-column: 1 / span 2;
+      height: 75px;
+      background: #0f172a;
+      border: none;
+      border-radius: 32px;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 17px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      position: relative;
+      overflow: hidden;
+
+      span {
+        position: relative;
+        z-index: 2;
+      }
+
+      i {
+        font-size: 20px;
+        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        position: relative;
+        z-index: 2;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transform: translateX(-100%);
+        transition: 0.6s;
+        z-index: 1;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: v.$primary-color;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        z-index: 0;
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px rgba(v.$primary-color, 0.3);
+
+        &::before {
+          transform: translateX(100%);
+        }
+
+        &::after {
+          transform: scaleX(1);
+          transform-origin: left;
+        }
+
+        i {
+          transform: translateX(10px) rotate(-15deg) scale(1.2);
+        }
+      }
+
+      &:active {
+        transform: scale(0.97);
+      }
     }
   }
+}
 
-  label {
-    position: absolute;
-    left: f.rem(15px);
-    top: f.rem(15px);
-    color: v.$txt-muted;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-    z-index: 5;
-    padding: 0 f.rem(5px);
-    background: transparent;
+@keyframes status-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
   }
-
-  textarea ~ label {
-    top: f.rem(18px);
-  }
-
-  // Floating Label Logic
-  input:focus ~ label,
-  input:not(:placeholder-shown) ~ label,
-  textarea:focus ~ label,
-  textarea:not(:placeholder-shown) ~ label {
-    top: f.rem(-20px) !important;
-    left: f.rem(18px);
-    font-size: f.rem(12px);
-    color: v.$clr-primary;
-    font-weight: 700;
-    background: v.$card-bg;
-    z-index: 6;
-    transform: none;
-  }
-
-  // Bottom glow indicator
-  .input-glow {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: v.$clr-primary;
-    box-shadow: v.$fx-glow;
-    transition: width 0.4s ease;
-    z-index: 1;
-  }
-
-  input:focus ~ .input-glow,
-  textarea:focus ~ .input-glow {
-    width: 100%;
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
   }
 }
 
-// 6. Action Button
-.submit-btn {
-  width: 100%;
-  background: v.$clr-primary;
-  color: v.$clr-bg;
-  border: none;
-  padding: f.rem(18px);
-  border-radius: f.rem(12px);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: f.rem(10px);
-  cursor: pointer;
-  transition: v.$tr-smooth;
-
-  &:hover {
-    box-shadow: v.$fx-glow-strong;
+@keyframes icon-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
     transform: translateY(-3px);
-    filter: brightness(1.1);
   }
 }
 
-// Global Keyframes
-@keyframes pulse {
-  0% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(1.1); }
-  100% { opacity: 1; transform: scale(1); }
+.bento-input-grid > div:nth-child(1) { transition-delay: 0.05s; }
+.bento-input-grid > div:nth-child(2) { transition-delay: 0.1s; }
+.bento-input-grid > div:nth-child(3) { transition-delay: 0.15s; }
+.bento-input-grid > div:nth-child(4) { transition-delay: 0.2s; }
+
+.contact-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, v.$primary-color, transparent);
+  opacity: 0.5;
 }
 
-@keyframes bg-move {
-  0% { transform: translate(-60%, -40%); }
-  100% { transform: translate(-40%, -60%); }
+.bento-card-mini .ms-3 {
+  display: flex;
+  flex-direction: column;
 }

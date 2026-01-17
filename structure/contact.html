@@ -18,139 +18,151 @@
 <body>
 
 
-<header class="navbar navbar-expand-lg">
-    <div class="container header-container">
-        <div class="logo">
-            <a href="../index.html">Asilbek<span>.dev</span></a>
-        </div>
+<div class="background-decor">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="glass-overlay"></div>
+</div>
 
-        <button class="navbar-toggler custom-toggler border-0" type="button">
-            <span class="toggler-icon"></span>
-            <span class="toggler-icon"></span>
-            <span class="toggler-icon"></span>
-        </button>
-
-        <nav class="collapse navbar-collapse nav-menu" id="asilbekNav">
-            <ul class="navbar-nav mx-auto">
-                <li><a href="../index.html" class="nav-link"><i class="bi bi-house-door me-1"></i> Home</a></li>
-                <li><a href="about.html" class="nav-link"><i class="bi bi-person-badge me-1"></i> About</a></li>
-                <li><a href="skills.html" class="nav-link"><i class="bi bi-lightning-charge me-1"></i> Skills</a></li>
-                <li><a href="portfolio.html" class="nav-link"><i class="bi bi-stack me-1"></i> Projects</a></li>
-                <li><a href="contact.html" class="nav-link active"><i class="bi bi-chat-dots me-1"></i> Contact</a></li>
-            </ul>
-
-            <div class="header-socials mobile-socials d-lg-none">
-                <a href="https://github.com/Asilbek2706" target="_blank"><i class="bi bi-github"></i></a>
-                <a href="https://t.me/as1lbek_2706" target="_blank"><i class="bi bi-send-fill"></i></a>
-            </div>
-        </nav>
-
-        <div class="header-socials d-none d-lg-flex">
-            <a href="https://github.com/Asilbek2706" target="_blank"><i class="bi bi-github"></i></a>
+<nav class="navbar-custom">
+    <div class="nav-container">
+        <a href="../index.html" class="nav-logo">
+            Asilbek<span>.dev</span>
+        </a>
+        <ul class="nav-menu">
+            <li><a href="../index.html" class="nav-link"><i class="bi bi-house-door"></i> Home</a></li>
+            <li><a href="./about.html" class="nav-link"><i class="bi bi-person"></i> About</a></li>
+            <li><a href="portfolio.html" class="nav-link"><i class="bi bi-grid"></i> Portfolio</a></li>
+            <li><a href="./contact.html" class="nav-link active"><i class="bi bi-envelope"></i> Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="./contact.html" class="btn-talk">Let's talk</a>
+            <button class="mobile-toggle" id="mobile-menu-btn">
+                <i class="bi bi-list"></i>
+            </button>
         </div>
     </div>
-</header>
+</nav>
 
-<main class="contact-container">
-    <div class="contact-bg-glow"></div>
-
-    <header class="section-header" data-aos="fade-up">
-        <span class="cyber-badge"><i class="bi bi-envelope-at"></i> Connectivity</span>
-        <h1 class="title">Get in <span class="highlight">Touch</span></h1>
-        <p class="header-intro">Have a complex technical challenge or a project inquiry? Reach out and let's engineer something exceptional together.</p>
-        <div class="header-line"></div>
-    </header>
-
-    <div class="contact-grid">
-        <aside class="contact-info" data-aos="fade-right">
-            <div class="info-card">
-                <i class="bi bi-geo-alt"></i>
-                <div>
-                    <h4>Location</h4>
-                    <p>Bukhara, Uzbekistan</p>
+<main class="container py-5">
+    <div class="row g-4">
+        <div class="col-lg-4" data-aos="fade-up">
+            <div class="bento-card profile-main p-4 text-center text-lg-start h-100">
+                <div class="img-wrapper mb-4 overflow-hidden rounded-4 shadow-sm">
+                    <img src="../images/men.jpg" alt="Asilbek Karomatov" class="img-fluid profile-img">
+                </div>
+                <div class="profile-info">
+                    <h2 class="fw-bold h4">Asilbek Karomatov</h2>
+                    <p class="text-muted small">Confident <b>Frontend Architect</b> 🖥️ Specializing in building modern and optimized architectures.</p>
+                </div>
+                <div class="d-grid gap-2 mt-4">
+                    <a href="./contact.html" target="_blank" class="btn btn-primary py-2 rounded-3 fw-semibold shadow-blue">Let's Talk</a>
+                    <a href="mailto:asiloke797@gmail.com" class="btn btn-outline-dark py-2 rounded-3 fw-semibold">Send Email</a>
+                </div>
+                <div class="social-links d-flex justify-content-between mt-4">
+                    <a href="https://t.me/as1lbek_2706" target="_blank" class="social-icon"><i class="bi bi-send-fill"></i></a>
+                    <a href="https://instagram.com/as1lbek_2706" target="_blank" class="social-icon"><i class="bi bi-instagram"></i></a>
+                    <a href="https://github.com/Asilbek2706" target="_blank" class="social-icon"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/asilbek-karomatov-91336b33b" target="_blank" class="social-icon"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
+        </div>
 
-            <a href="mailto:asiloke797@gmail.com" class="info-card clickable-card" target="_blank">
-                <i class="bi bi-mailbox"></i>
-                <div>
-                    <h4>Email</h4>
-                    <p>asiloke797@gmail.com</p>
+        <div class="col-lg-8">
+            <div class="contact-container h-100">
+                <div class="contact-bg-glow"></div>
+
+                <header class="section-header" data-aos="fade-up">
+                    <span class="cyber-badge"><i class="bi bi-envelope-at"></i> Connectivity</span>
+                    <h1 class="title">Get in <span class="highlight">Touch</span></h1>
+                    <p class="header-intro">Have a project inquiry? Let's engineer something exceptional together.</p>
+                </header>
+
+                <div class="bento-contact-grid">
+
+                    <div class="bento-info-stack" data-aos="fade-right">
+                        <div class="bento-card-mini">
+                            <i class="bi bi-geo-alt"></i>
+                            <div class="ms-3">
+                                <span>Location</span>
+                                <p>Bukhara, UZ</p>
+                            </div>
+                        </div>
+                        <a href="mailto:asiloke797@gmail.com" class="bento-card-mini clickable" target="_blank">
+                            <i class="bi bi-mailbox"></i>
+                            <div class="ms-3">
+                                <span>Email</span>
+                                <p>asiloke797@mail</p>
+                            </div>
+                        </a>
+                        <a href="https://t.me/as1lbek_2706" class="bento-card-mini clickable" target="_blank">
+                            <i class="bi bi-telegram"></i>
+                            <div class="ms-3">
+                                <span>Telegram</span>
+                                <p>@as1lbek_2706</p>
+                            </div>
+                        </a>
+                        <div class="bento-card-mini status">
+                            <span class="status-dot"></span>
+                            <p>Available for work</p>
+                        </div>
+                    </div>
+
+                    <form action="#" class="bento-form" id="contactForm" data-aos="fade-left">
+                        <div class="bento-input-grid">
+                            <div class="input-bento-cell name">
+                                <label><i class="bi bi-person"></i> Name</label>
+                                <input type="text" id="fullname" placeholder="John Doe" required>
+                            </div>
+                            <div class="input-bento-cell email">
+                                <label><i class="bi bi-envelope"></i> Email</label>
+                                <input type="email" id="email" placeholder="example@mail.com" required>
+                            </div>
+                            <div class="input-bento-cell subject">
+                                <label><i class="bi bi-bookmark"></i> Subject</label>
+                                <input type="text" id="subject" placeholder="Project Idea" required>
+                            </div>
+                            <div class="input-bento-cell message">
+                                <label><i class="bi bi-chat-left-dots"></i> Message</label>
+                                <textarea id="message" rows="4" placeholder="Tell me more..." required></textarea>
+                            </div>
+                            <button type="submit" class="bento-submit">
+                                <span>Send Message</span>
+                                <i class="bi bi-send-fill"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </a>
-
-            <a href="https://t.me/as1lbek_2706" class="info-card clickable-card" target="_blank">
-                <i class="bi bi-telegram"></i>
-                <div>
-                    <h4>Telegram</h4>
-                    <p>@as1lbek_2706</p>
-                </div>
-            </a>
-
-            <div class="contact-status">
-                <span class="status-dot"></span>
-                Currently available for new opportunities
             </div>
-        </aside>
-
-        <section class="contact-form-wrapper" data-aos="fade-left">
-            <form action="#" class="cyber-form">
-                <div class="form-row">
-                    <div class="input-group">
-                        <input type="text" id="fullname" placeholder=" " required>
-                        <label for="fullname">
-                            <i class="bi bi-person"></i> Full Name
-                        </label>
-                        <span class="input-border-glow"></span>
-                    </div>
-
-                    <div class="input-group">
-                        <input type="email" id="email" placeholder=" " required>
-                        <label for="email">
-                            <i class="bi bi-envelope"></i> Email Address
-                        </label>
-                        <span class="input-border-glow"></span>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <input type="text" id="subject" placeholder=" " required>
-                    <label for="subject">
-                        <i class="bi bi-bookmark-star"></i> Subject
-                    </label>
-                    <span class="input-border-glow"></span>
-                </div>
-
-                <div class="input-group">
-                    <textarea id="message" rows="5" placeholder=" " required></textarea>
-                    <label for="message">
-                        <i class="bi bi-chat-left-dots"></i> Message
-                    </label>
-                    <span class="input-border-glow"></span>
-                </div>
-
-                <button type="submit" class="submit-btn">
-                    <span>Send Message</span>
-                    <i class="bi bi-send-fill"></i>
-                </button>
-            </form>
-        </section>
+        </div>
     </div>
 </main>
 
-<footer class="footer">
-    <div class="container">
-        <div class="footer-top">
-            <div class="logo">Asilbek<span>.dev</span></div>
-            <div class="social-icons">
-                <a href="https://t.me/as1lbek_2706" class="social-link" title="Telegram" target="_blank"><i class="bi bi-telegram"></i></a>
-                <a href="https://instagram.com/as1lbek_2706" class="social-link" title="Instagram" target="_blank"><i class="bi bi-instagram"></i></a>
-                <a href="https://www.linkedin.com/in/asilbek-karomatov-91336b33b" class="social-link" title="LinkedIn" target="_blank"><i class="bi bi-linkedin"></i></a>
-                <a href="mailto:asilbekkaromatov2@gmail.com" class="social-link" title="Email" target="_blank"><i class="bi bi-envelope-at-fill"></i></a>
+<footer class="footer-custom mt-5 mb-4">
+    <div class="footer-container">
+        <div class="footer-section">
+            <a href="../index.html" class="nav-logo">
+                Asilbek<span>.dev</span>
+            </a>
+            <div class="status-pill ms-lg-3">
+                <span class="pulse-dot"></span>
+                <span class="small fw-semibold">2026 • Available</span>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Asilbek Karomatov. Crafted with <i class="bi bi-heart-pulse-fill text-danger mx-1"></i> and SASS.</p>
+
+        <ul class="footer-menu d-none d-lg-flex">
+            <li><a href="../index.html" class="footer-link">Home</a></li>
+            <li><a href="./about.html" class="footer-link">About</a></li>
+            <li><a href="portfolio.html" class="footer-link">Portfolio</a></li>
+            <li><a href="./contact.html" class="footer-link">Contact</a></li>
+        </ul>
+
+        <div class="footer-actions">
+            <div class="social-group">
+                <a href="https://t.me/as1lbek_2706" class="social-btn"><i class="bi bi-send"></i></a>
+                <a href="https://github.com/Asilbek2706" class="social-btn"><i class="bi bi-github"></i></a>
+            </div>
+            <p class="copyright mb-0 d-none d-sm-block">© 2026</p>
         </div>
     </div>
 </footer>
