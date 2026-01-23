@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+import Preloader from "./components/Preloader/Preloader";
 import Navbar from './components/Navbar/Navbar';
 import ProfileCard from './components/ProfileCard/ProfileCard';
 import Education from './components/Education/Education';
@@ -16,58 +17,80 @@ import Contact from './components/Contact/Contact';
 import './App.scss';
 
 const App: React.FC = () => {
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
+        // AOS init
         AOS.init({
             duration: 800,
             once: true,
             easing: 'ease-out-cubic',
         });
+
+        const handleLoad = () => {
+            setTimeout(() => setIsLoading(false), 1500);
+        };
+
+        if (document.readyState === 'complete') {
+            handleLoad();
+        } else {
+            window.addEventListener('load', handleLoad);
+            const backupTimer = setTimeout(handleLoad, 3000);
+            return () => {
+                window.removeEventListener('load', handleLoad);
+                clearTimeout(backupTimer);
+            };
+        }
     }, []);
 
     return (
-        <BrowserRouter basename={"/"}>
-            <div className="app-wrapper">
-                <div className="background-decor" aria-hidden="true">
-                    <div className="shape shape-1"></div>
-                    <div className="shape shape-2"></div>
-                    <div className="glass-overlay"></div>
-                </div>
+        <>
+            {isLoading && <Preloader />}
 
-                <Navbar />
-
-                <main className="container mt-5 pt-5 pb-5">
-                    <div className="row g-4 align-items-start">
-                        <aside className="col-lg-4">
-                            <ProfileCard />
-                        </aside>
-
-                        <section className="col-lg-8">
-                            <Routes>
-                                <Route path="/" element={
-                                    <div className="row g-4">
-                                        <div className="col-md-7">
-                                            <Education />
-                                        </div>
-                                        <div className="col-md-5">
-                                            <Skills />
-                                        </div>
-                                        <div className="col-12">
-                                            <Projects />
-                                        </div>
-                                    </div>
-                                } />
-
-                                <Route path="/about" element={<About />} />
-                                <Route path="/portfolio" element={<Portfolio />} />
-                                <Route path="/contact" element={<Contact />} />
-                            </Routes>
-                        </section>
+            <BrowserRouter basename={"/"}>
+                <div className={`app-wrapper ${isLoading ? 'hidden' : 'visible'}`}>
+                    <div className="background-decor" aria-hidden="true">
+                        <div className="shape shape-1"></div>
+                        <div className="shape shape-2"></div>
+                        <div className="glass-overlay"></div>
                     </div>
-                </main>
 
-                <Footer />
-            </div>
-        </BrowserRouter>
+                    <Navbar />
+
+                    <main className="container mt-5 pt-5 pb-5">
+                        <div className="row g-4 align-items-start">
+                            <aside className="col-lg-4">
+                                <ProfileCard />
+                            </aside>
+
+                            <section className="col-lg-8">
+                                <Routes>
+                                    <Route path="/" element={
+                                        <div className="row g-4">
+                                            <div className="col-md-7">
+                                                <Education />
+                                            </div>
+                                            <div className="col-md-5">
+                                                <Skills />
+                                            </div>
+                                            <div className="col-12">
+                                                <Projects />
+                                            </div>
+                                        </div>
+                                    } />
+
+                                    <Route path="/about" element={<About />} />
+                                    <Route path="/portfolio" element={<Portfolio />} />
+                                    <Route path="/contact" element={<Contact />} />
+                                </Routes>
+                            </section>
+                        </div>
+                    </main>
+
+                    <Footer />
+                </div>
+            </BrowserRouter>
+        </>
     );
 };
 
