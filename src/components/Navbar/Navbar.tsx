@@ -1,29 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import './Navbar.scss';
 
 const Navbar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const location = useLocation();
+
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [location]);
+
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [isMenuOpen]);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
 
     return (
-        <nav className="navbar-custom">
+        <nav className={`navbar-custom ${isMenuOpen ? 'menu-open' : ''}`}>
             <div className="nav-container">
-                <a href="/" className="nav-logo">
+                <Link to="/" className="nav-logo" onClick={() => setIsMenuOpen(false)}>
                     Asilbek<span>.dev</span>
-                </a>
+                </Link>
 
-                {/* Menu ochilganda 'active' klassi qo'shiladi */}
+                {isMenuOpen && <div className="nav-overlay" onClick={toggleMenu}></div>}
+
                 <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-                    <li><a href="/" className="nav-link active"><i className="bi bi-house-door"></i> Home</a></li>
-                    <li><a href="/about" className="nav-link"><i className="bi bi-person"></i> About</a></li>
-                    <li><a href="/portfolio" className="nav-link"><i className="bi bi-grid"></i> Portfolio</a></li>
-                    <li><a href="/contact" className="nav-link"><i className="bi bi-envelope"></i> Contact</a></li>
+                    <li className="nav-item">
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                        >
+                            <i className="bi bi-house-door"></i> Home
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink
+                            to="/about"
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                        >
+                            <i className="bi bi-person"></i> About
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink
+                            to="/portfolio"
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                        >
+                            <i className="bi bi-grid"></i> Portfolio
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink
+                            to="/contact"
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                        >
+                            <i className="bi bi-envelope"></i> Contact
+                        </NavLink>
+                    </li>
                 </ul>
 
                 <div className="nav-actions">
-                    <a href="/contact" className="btn-talk">Let's talk</a>
+                    <Link to="/contact" className="btn-talk d-desktop-only">Let's talk</Link>
+
                     <button
-                        className="mobile-toggle"
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className={`mobile-toggle ${isMenuOpen ? 'is-active' : ''}`}
+                        onClick={toggleMenu}
+                        aria-label="Toggle menu"
+                        type="button"
                     >
                         <i className={`bi ${isMenuOpen ? 'bi-x' : 'bi-list'}`}></i>
                     </button>

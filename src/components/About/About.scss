@@ -1,0 +1,382 @@
+// --- 1. O'zgaruvchilar (Variables) ---
+$primary-color: #4770ff;
+$primary-soft: rgba(71, 112, 255, 0.1);
+$text-dark: #1a1a1a;
+$text-muted: #666;
+$bg-light: #f8f9fa;
+$bg-glass: rgba(255, 255, 255, 0.7);
+$white: #ffffff;
+$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$border-radius: 24px;
+
+.home-main-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 20px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.about-bento-grid {
+  flex: 0 0 850px; // Kenglikni qat'iy belgilaymiz, shunda u pastga tushib ketmaydi
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 24px;
+
+  .bento-card {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 32px;
+    padding: 40px;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-10px);
+      border-color: rgba($primary-color, 0.3);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+
+      .icon-box {
+        background: $primary-color;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .bio-card {
+    grid-column: span 2;
+    min-height: 320px;
+    background: linear-gradient(135deg, #ffffff 0%, #fcfdfe 100%);
+
+    .badge-modern {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      background: #f1f5f9;
+      border-radius: 100px;
+      width: fit-content;
+      margin-bottom: 24px;
+
+
+
+      span {
+        font-size: 13px;
+        font-weight: 700;
+        color: #475569;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .about-title {
+      font-size: 48px;
+      font-weight: bold;
+      line-height: 1.6;
+      letter-spacing: 0;
+      margin: 0 0 20px 0;
+      color: #232323;
+
+      .highlight {
+        color: $primary-color;
+        line-height: 1.6;
+
+      }
+    }
+
+    .bio-lead {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: $primary-color;
+    }
+
+    .bio-story {
+      p {
+        font-size: 18px;
+        line-height: 1.7;
+        color: #64748b;
+        margin: 0;
+
+        .fw-bold {
+          color: #1e293b;
+          font-weight: 800;
+        }
+      }
+    }
+  }
+
+  .bento-row {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .info-mini {
+    height: 180px;
+    justify-content: center;
+
+    .icon-box {
+      width: 64px;
+      height: 64px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: $primary-color;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .info-text {
+      h4 {
+        font-size: 22px;
+        font-weight: 800;
+        margin: 0 0 6px 0;
+        color: #0f172a;
+      }
+      p {
+        font-size: 15px;
+        color: #94a3b8;
+        margin: 0;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .arsenal-card {
+    grid-column: span 2;
+    padding: 50px;
+
+    .d-flex {
+      margin-bottom: 32px;
+
+      h3 {
+        font-size: 32px;
+        font-weight: 900;
+        letter-spacing: -1.5px;
+        color: #0f172a;
+      }
+
+      .status-learning {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 16px;
+        background: rgba($primary-color, 0.06);
+        border-radius: 100px;
+        font-size: 14px;
+        font-weight: 700;
+        color: $primary-color;
+      }
+    }
+  }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+
+    .skill-item {
+      background: #fcfdfe;
+      border: 1px solid #f1f5f9;
+      padding: 30px 15px;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+
+      i {
+        font-size: 36px;
+        transition: transform 0.3s ease;
+      }
+
+      .skill-info {
+        span {
+          display: block;
+          font-size: 16px;
+          font-weight: 800;
+          color: #1e293b;
+          margin-bottom: 4px;
+        }
+        small {
+          font-size: 12px;
+          font-weight: 700;
+          color: #94a3b8;
+          text-transform: uppercase;
+        }
+      }
+
+      &:hover {
+        background: #ffffff;
+        border-color: $primary-color;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.04);
+
+        i {
+          transform: scale(1.15);
+        }
+      }
+    }
+  }
+}
+
+.dot-pulse {
+  width: 10px;
+  height: 10px;
+  background: $primary-color;
+  border-radius: 50%;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    background: $primary-color;
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: simplePulse 2s infinite;
+  }
+}
+
+@keyframes simplePulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.card-glow {
+  display: none;
+}
+
+// Spacing Utilities
+.fw-bold { font-weight: 800; }
+.text-primary { color: $primary-color; }
+
+
+@media (max-width: 1200px) {
+  .home-main-wrapper {
+    gap: 30px;
+    padding: 60px 20px;
+  }
+
+  .about-bento-grid {
+    flex: 0 0 750px;
+
+    .bio-card .about-title {
+      font-size: 48px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .home-main-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-bento-grid {
+    flex: 0 0 100%;
+    max-width: 850px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-main-wrapper {
+    padding: 40px 15px;
+  }
+
+  .about-bento-grid {
+    gap: 16px;
+
+    .bento-card {
+      padding: 30px;
+      border-radius: 24px;
+    }
+
+    .bio-card {
+      .about-title {
+        font-size: 38px;
+        letter-spacing: -2px;
+      }
+      .bio-lead {
+        font-size: 18px;
+      }
+    }
+
+    .stack-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .about-bento-grid {
+    grid-template-columns: 1fr;
+
+    .bio-card, .bento-row, .arsenal-card {
+      grid-column: span 1;
+    }
+
+    .bento-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .bio-card {
+      padding: 25px;
+      .about-title {
+        font-size: 32px;
+      }
+    }
+
+    .info-mini {
+      height: auto;
+      padding: 25px;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .icon-box {
+        margin-bottom: 15px;
+      }
+    }
+
+    .arsenal-card {
+      padding: 25px;
+
+      .d-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+
+        h3 {
+          font-size: 24px;
+        }
+      }
+    }
+
+    .stack-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .about-bento-grid .stack-grid {
+    grid-template-columns: 1fr;
+  }
+}
