@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# 🚀 Asilbek.dev | Modern Bento Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-performance, responsive personal portfolio built with **React 18** and **TypeScript**, featuring a sleek **Bento Grid** layout. This project showcases technical skills, projects, and integrates a secure contact system.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+* **Bento Grid UI**: A modern, clean, and organized interface inspired by cutting-edge design trends.
+* **Telegram Bot Integration**: A functional contact form that delivers messages directly to a Telegram chat via the Telegram Bot API.
+* **Custom Dark Preloader**: A professional, branded loading screen with a deep navy-blue aesthetic.
+* **Secure Environment**: Uses `.env` variables to keep sensitive API credentials safe.
+* **Smooth Animations**: Integrated with **AOS (Animate On Scroll)** for a premium user experience.
+* **Fully Responsive**: Perfectly optimized for mobile, tablet, and desktop screens.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* **Frontend**: React.js (TypeScript)
+* **Bundler**: Vite
+* **Styling**: SCSS (Sass), Bootstrap 5
+* **Animations**: AOS (Animate On Scroll)
+* **API**: Telegram Bot API (via Fetch)
+* **Icons**: Bootstrap Icons
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Installation & Setup
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Follow these steps to run the project locally:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/Asilbek2706/asilbek2706.github.io.git](https://github.com/Asilbek2706/asilbek2706.github.io.git)
+    cd asilbek2706.github.io
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3.  **Environment Variables Setup:**
+    Create a `.env` file in the root directory and add your Telegram credentials:
+    ```env
+    VITE_TELEGRAM_BOT_TOKEN=your_bot_token_here
+    VITE_TELEGRAM_CHAT_ID=your_chat_id_here
+    ```
+
+4.  **Start the development server:**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 📨 Telegram Integration
+
+The contact form uses a `POST` request to the Telegram Bot API. To ensure security:
+* The `.env` file is listed in `.gitignore` to prevent leaking API keys.
+* The form includes conditional states: `Sending`, `Success`, and `Error` (with visual feedback).
+
+---
+
+## 📸 Screenshots
+
+| Desktop View                       | Mobile View                      |
+|:-----------------------------------|:---------------------------------|
+| ![Desktop Screenshot](desktop.png) | ![Mobile Screenshot](mobile.png) |
+
+---
+
+## 👨‍💻 Author
+
+* **Asilbek Karomatov**
+* **GitHub**: [@Asilbek2706](https://github.com/Asilbek2706)
+* **Telegram**: [@as1lbek_2706](https://t.me/as1lbek_2706)
+* **Email**: asiloke797@gmail.com
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
