@@ -73,11 +73,13 @@ main.container {
   width: 100%;
   padding-bottom: 45px !important;
   .swiper-wrapper {
+    transition-timing-function: linear !important;
     @media (min-width: 992px) {
       display: grid !important;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       transform: none !important;
+      overflow: visible !important;
     }
   }
 }
