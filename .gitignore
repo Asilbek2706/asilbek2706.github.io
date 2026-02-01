@@ -26,3 +26,4 @@ dist-ssr
 
 backend/.env
 backend/venv
+backend/api/migrations
