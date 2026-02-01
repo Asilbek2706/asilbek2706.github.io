@@ -22,6 +22,9 @@ const ProfileCard: React.FC = () => {
         const fetchProfile = async () => {
             try {
                 const baseUrl = import.meta.env.VITE_API_URL;
+                if (!baseUrl) {
+                    console.error("DIQQAT: VITE_API_URL topilmadi! Vercel Settings-ni tekshiring.");
+                }
                 const response = await axios.get(`${baseUrl}/profile/`);
                 setProfile(Array.isArray(response.data) ? response.data[0] : response.data);
             } catch (error) {
