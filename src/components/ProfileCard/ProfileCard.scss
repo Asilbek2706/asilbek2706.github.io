@@ -7,8 +7,15 @@ $bg-light: #f8f9fa;
 $bg-glass: rgba(255, 255, 255, 0.7);
 $white: #ffffff;
 $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-$border-radius: 24px;
 
+// --- 2. Skeleton Animatsiyasi ---
+@keyframes skeleton-pulse {
+  0% { background-color: #eaecf0; }
+  50% { background-color: #d1d5db; }
+  100% { background-color: #eaecf0; }
+}
+
+// --- 3. Asosiy Card Dizayni ---
 .profile-main {
   position: sticky;
   top: 100px;
@@ -17,19 +24,39 @@ $border-radius: 24px;
   backdrop-filter: blur(15px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 28px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
+  // --- Skeleton Holati ---
+  &.skeleton-wrapper {
+    .skeleton {
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+      border-radius: 12px;
+      background-color: #eee;
+    }
+    .skeleton-img { width: 100%; aspect-ratio: 1 / 1; border-radius: 20px; margin-bottom: 1.5rem; }
+    .skeleton-title { width: 70%; height: 28px; margin-bottom: 1rem; }
+    .skeleton-text { width: 100%; height: 60px; margin-bottom: 1.5rem; }
+    .skeleton-btn { width: 100%; height: 45px; margin-bottom: 0.5rem; }
+  }
+
+  // --- Rasm va Wrapper ---
   .img-wrapper {
     border-radius: 20px;
     background: #f1f3f5;
     overflow: hidden;
+    position: relative;
 
     .profile-img {
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: cover;
-      transition: transform 0.6s ease;
+      transition: transform 0.6s ease, opacity 0.5s ease;
       filter: grayscale(20%);
+      display: block;
+
+      // Rasmni silliq chiqishi uchun
+      &.loading { opacity: 0; }
+      &.loaded { opacity: 1; }
 
       &:hover {
         transform: scale(1.08);
@@ -38,21 +65,26 @@ $border-radius: 24px;
     }
   }
 
+  // --- Ma'lumotlar ---
   .profile-info {
-    h2 { letter-spacing: -0.5px; }
+    h2 { letter-spacing: -0.5px; margin-bottom: 0.5rem; }
     p b { color: $primary-color; }
   }
 
+  // --- Tugmalar ---
   .shadow-blue {
     background: $primary-color;
+    color: $white !important;
     border: none;
     box-shadow: 0 10px 20px rgba($primary-color, 0.2);
+
     &:hover {
       background: $text-dark;
       transform: translateY(-2px);
     }
   }
 
+  // --- Ijtimoiy tarmoqlar ---
   .social-links {
     display: flex;
     justify-content: flex-start;
@@ -61,7 +93,7 @@ $border-radius: 24px;
     flex-wrap: wrap;
 
     .social-icon {
-      width: 70px;
+      width: 65px;
       height: 45px;
       display: flex;
       align-items: center;
@@ -69,8 +101,8 @@ $border-radius: 24px;
       background: transparent;
       color: $text-dark;
       border-radius: 12px;
-      border: 1px solid $text-dark;
-      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.1);
+      transition: $transition;
 
       i {
         font-size: 1.2rem;
@@ -82,112 +114,10 @@ $border-radius: 24px;
         color: $white;
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-color: $text-dark;
 
-        i {
-          transform: scale(1.1);
-        }
-      }
-
-      &:active {
-        transform: translateY(-2px);
+        i { transform: scale(1.1); }
       }
     }
-  }
-  // --- 1. O'zgaruvchilar (Variables) ---
-  $primary-color: #4770ff;
-  $primary-soft: rgba(71, 112, 255, 0.1);
-  $text-dark: #1a1a1a;
-  $text-muted: #666;
-  $bg-light: #f8f9fa;
-  $bg-glass: rgba(255, 255, 255, 0.7);
-  $white: #ffffff;
-  $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  $border-radius: 24px;
-
-  .profile-main {
-    position: sticky;
-    top: 100px;
-    z-index: 10;
-    background: $bg-glass;
-    backdrop-filter: blur(15px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 28px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-
-    .img-wrapper {
-      border-radius: 20px;
-      background: #f1f3f5;
-      overflow: hidden;
-
-      .profile-img {
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        transition: transform 0.6s ease;
-        filter: grayscale(20%);
-
-        &:hover {
-          transform: scale(1.08);
-          filter: grayscale(0%);
-        }
-      }
-    }
-
-    .profile-info {
-      h2 { letter-spacing: -0.5px; }
-      p b { color: $primary-color; }
-    }
-
-    .shadow-blue {
-      background: $primary-color;
-      border: none;
-      box-shadow: 0 10px 20px rgba($primary-color, 0.2);
-      &:hover {
-        background: $text-dark;
-        transform: translateY(-2px);
-      }
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: flex-start;
-      gap: 12px;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-
-      .social-icon {
-        width: 70px;
-        height: 45px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: transparent;
-        color: $text-dark;
-        border-radius: 12px;
-        border: 1px solid $text-dark;
-        transition: all 0.3s ease;
-
-        i {
-          font-size: 1.2rem;
-          transition: transform 0.3s ease;
-        }
-
-        &:hover {
-          background: $text-dark;
-          color: $white;
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-
-          i {
-            transform: scale(1.1);
-          }
-        }
-
-        &:active {
-          transform: translateY(-2px);
-        }
-      }
-    }
-
   }
 }

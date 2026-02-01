@@ -1,3 +1,4 @@
+/* Variables & Theme */
 $primary-color: #4770ff;
 $primary-dark: #2d48c8;
 $primary-light: #6e8eff;
@@ -24,6 +25,7 @@ $transition-smooth: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 $font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 $font-mono: 'JetBrains Mono', monospace;
 
+/* Mixins */
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -44,25 +46,97 @@ $font-mono: 'JetBrains Mono', monospace;
   color: $text-main;
 }
 
+/* Animations */
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse-soft {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+/* Main Wrapper */
 .portfolio-wrapper {
   padding: 120px 0;
   background: $bg-body;
   font-family: $font-sans;
-  overflow: hidden;
   min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
 
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 10% 20%, rgba($primary-color, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba($accent-color, 0.03) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  /* Loader */
+  .portfolio-loader {
+    min-height: 60vh;
+    @include flex-center;
+    flex-direction: column;
+    gap: 30px;
+
+    .spinner {
+      width: 64px;
+      height: 64px;
+      border: 5px solid $primary-soft;
+      border-top-color: $primary-color;
+      border-radius: 50%;
+      animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    p {
+      font-family: $font-mono;
+      color: $text-secondary;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: pulse-soft 2s infinite;
+    }
+  }
+
+  /* Header Section */
   .projects-header {
     max-width: 1200px;
     margin: 0 auto 100px auto;
     padding: 0 24px;
-    text-align: left;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+
+    .badge-container {
+      margin-bottom: 24px;
+      @include flex-center;
+    }
 
     .cyber-badge {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      padding: 10px 20px;
-      background: white;
+      padding: 12px 28px;
+      background: $text-white;
       border: 1px solid $border-color;
       border-radius: 100px;
       font-size: 13px;
@@ -85,9 +159,7 @@ $font-mono: 'JetBrains Mono', monospace;
         animation: shine 3s infinite;
       }
 
-      i {
-        font-size: 16px;
-      }
+      i { font-size: 18px; }
     }
 
     .title {
@@ -102,12 +174,13 @@ $font-mono: 'JetBrains Mono', monospace;
         &::after {
           content: '';
           position: absolute;
-          bottom: 15%;
+          bottom: 12%;
           left: 0;
           width: 100%;
-          height: 15px;
-          background: rgba($primary-color, 0.08);
+          height: 12px;
+          background: rgba($primary-color, 0.1);
           z-index: -1;
+          border-radius: 10px;
         }
       }
     }
@@ -115,117 +188,113 @@ $font-mono: 'JetBrains Mono', monospace;
     .header-intro {
       font-size: 22px;
       color: $text-secondary;
-      max-width: 700px;
-      line-height: 1.7;
+      max-width: 750px;
+      margin: 0 auto;
+      line-height: 1.8;
       font-weight: 500;
-      opacity: 0.9;
+      opacity: 0.85;
     }
   }
 }
 
+/* Projects Grid Layout */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  max-width: 1248px;
+  grid-template-columns: repeat(2, 1fr); // Qat'iy 2 ustun
+  gap: 48px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 40px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Bento Card Design */
 .project-bento-card {
   background: $bg-card;
   border: 1px solid $border-color;
-  border-radius: $radius-lg;
-  padding: 32px;
+  border-radius: $radius-xl;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   transition: $transition-smooth;
   position: relative;
   z-index: 1;
+  height: 100%;
+  opacity: 1 !important;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: $radius-lg;
-    background: radial-gradient(circle at top right, rgba($primary-color, 0.05), transparent);
+    border-radius: $radius-xl;
+    background: radial-gradient(circle at top right, rgba($primary-color, 0.08), transparent 60%);
     opacity: 0;
     transition: $transition-base;
     z-index: -1;
   }
 
   &:hover {
-    transform: translateY(-16px);
+    transform: translateY(-20px) scale(1.01);
     border-color: $border-hover;
     box-shadow: $shadow-lg;
 
-    &::before {
-      opacity: 1;
-    }
+    &::before { opacity: 1; }
 
     .project-img-wrapper {
-      .project-img {
-        transform: scale(1.08) rotate(1deg);
-      }
-
-      .project-overlay {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      .project-img { transform: scale(1.12) rotate(1deg); }
+      .project-overlay { opacity: 1; transform: translateY(0); }
     }
 
-    h3 {
-      color: $primary-color;
-      transform: translateX(8px);
-    }
+    h3 { color: $primary-color; transform: translateX(12px); }
   }
 
   .project-img-wrapper {
     position: relative;
-    height: 320px;
-    border-radius: $radius-md;
+    height: 380px;
+    border-radius: $radius-lg;
     overflow: hidden;
     background: #f1f5f9;
-    margin-bottom: 32px;
-    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.02);
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 
     .project-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: transform 2s cubic-bezier(0.2, 1, 0.3, 1);
     }
 
     .project-overlay {
       position: absolute;
       inset: 0;
       @include glass-effect;
-      background: rgba(15, 23, 42, 0.4);
+      background: rgba(15, 23, 42, 0.6);
       @include flex-center;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(40px);
       transition: $transition-smooth;
 
       .overlay-links {
         display: flex;
-        gap: 20px;
+        gap: 24px;
 
         a {
-          width: 64px;
-          height: 64px;
-          background: white;
-          border-radius: 20px;
+          width: 76px;
+          height: 76px;
+          background: $text-white;
+          border-radius: 26px;
           color: $text-main;
           @include flex-center;
-          font-size: 28px;
+          font-size: 32px;
           transition: $transition-base;
           text-decoration: none;
 
           &:hover {
             background: $primary-color;
-            color: white;
-            transform: scale(1.15) translateY(-5px);
-            box-shadow: 0 15px 30px rgba($primary-color, 0.3);
+            color: $text-white;
+            transform: scale(1.2) rotate(8deg);
+            box-shadow: 0 20px 40px rgba($primary-color, 0.4);
           }
         }
       }
@@ -241,63 +310,63 @@ $font-mono: 'JetBrains Mono', monospace;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
 
       .p-cat {
         font-size: 12px;
         font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: $text-secondary;
+        letter-spacing: 2px;
+        color: $primary-color;
         background: $primary-soft;
-        padding: 8px 18px;
+        padding: 10px 24px;
         border-radius: 100px;
         border: 1px solid rgba($primary-color, 0.1);
       }
 
       .p-year {
         font-family: $font-mono;
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 16px;
+        font-weight: 700;
         color: $text-muted;
       }
     }
 
     h3 {
-      font-size: 36px;
+      font-size: 40px;
       font-weight: 900;
       color: $text-main;
-      margin-bottom: 24px;
-      letter-spacing: -1.5px;
+      margin-bottom: 32px;
+      letter-spacing: -2px;
       transition: $transition-base;
+      line-height: 1.1;
     }
 
     .p-details-box {
       background: #fafbfc;
-      padding: 24px;
-      border-radius: $radius-md;
+      padding: 32px;
+      border-radius: $radius-lg;
       border: 1px solid $border-color;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
       flex-grow: 1;
+      transition: $transition-base;
 
       p {
-        font-size: 16px;
-        line-height: 1.8;
+        font-size: 17px;
+        line-height: 1.9;
         color: $text-secondary;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
 
-        &:last-child {
-          margin-bottom: 0;
-        }
+        &:last-child { margin-bottom: 0; }
 
         strong {
           color: $text-main;
-          font-size: 12px;
+          font-size: 13px;
           text-transform: uppercase;
-          letter-spacing: 1px;
+          letter-spacing: 2px;
           display: block;
-          margin-bottom: 8px;
-          font-weight: 800;
+          margin-bottom: 12px;
+          font-weight: 900;
         }
       }
     }
@@ -309,12 +378,12 @@ $font-mono: 'JetBrains Mono', monospace;
       margin-top: auto;
 
       span {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 700;
         color: $text-secondary;
-        background: white;
-        padding: 8px 16px;
-        border-radius: 12px;
+        background: $text-white;
+        padding: 10px 22px;
+        border-radius: 14px;
         border: 1px solid $border-color;
         transition: $transition-base;
         font-family: $font-mono;
@@ -323,7 +392,7 @@ $font-mono: 'JetBrains Mono', monospace;
           border-color: $primary-color;
           color: $primary-color;
           background: rgba($primary-color, 0.02);
-          transform: translateY(-2px);
+          transform: translateY(-4px);
         }
       }
     }
@@ -334,128 +403,88 @@ $font-mono: 'JetBrains Mono', monospace;
     position: absolute;
     top: 0;
     left: 0;
-    width: 6px;
+    width: 10px;
     height: 0;
     background: $primary-color;
     transition: $transition-smooth;
-    border-radius: $radius-lg 0 0 $radius-lg;
+    border-radius: $radius-xl 0 0 $radius-xl;
   }
 
-  &:hover::after {
-    height: 100%;
-  }
+  &:hover::after { height: 100%; }
 }
 
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 100px 24px;
+  color: $text-muted;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* AOS Styles */
 [data-aos="fade-up"] {
   opacity: 0;
-  transform: translateY(40px);
-  transition-property: opacity, transform;
+  transform: translateY(60px);
+  transition-duration: 1s !important;
 }
 
 [data-aos="fade-up"].aos-animate {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
-@keyframes shine {
-  0% { left: -100%; }
-  20% { left: 100%; }
-  100% { left: 100%; }
-}
-
+/* Responsive Design */
 @media (max-width: 1440px) {
-  .portfolio-wrapper .projects-header .title {
-    font-size: 64px;
-  }
+  .portfolio-wrapper .projects-header .title { font-size: 64px; }
+  .projects-grid { gap: 40px; padding: 0 32px; }
 }
 
-@media (max-width: 1200px) {
-  .portfolio-wrapper {
-    padding: 80px 0;
-    .projects-header .title { font-size: 56px; }
-  }
-}
-
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .projects-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; // Planshetda bitta ustun
     max-width: 800px;
   }
-
-  .project-bento-card {
-    padding: 40px;
-  }
+  .portfolio-wrapper { padding: 80px 0; }
+  .project-bento-card { padding: 32px; }
 }
 
 @media (max-width: 768px) {
-  .portfolio-wrapper {
-    .projects-header {
-      text-align: center;
-      margin-bottom: 60px;
-      .title { font-size: 44px; letter-spacing: -2px; }
-      .header-intro { margin: 0 auto; font-size: 18px; }
-    }
+  .portfolio-wrapper .projects-header {
+    margin-bottom: 60px;
+    .title { font-size: 44px; letter-spacing: -1.5px; }
+    .header-intro { font-size: 18px; }
   }
+  .project-bento-card {
+    border-radius: $radius-lg;
+    .project-img-wrapper { height: 280px; }
+    .project-info h3 { font-size: 32px; }
+    .p-details-box { padding: 24px; }
+  }
+}
 
+@media (max-width: 480px) {
+  .projects-grid { padding: 0 20px; gap: 32px; }
   .project-bento-card {
     padding: 24px;
-    border-radius: $radius-md;
-    .project-img-wrapper { height: 260px; }
-    .project-info h3 { font-size: 28px; }
+    h3 { font-size: 28px; }
+    .project-img-wrapper { height: 220px; }
   }
 }
 
-@media (max-width: 576px) {
-  .portfolio-wrapper {
-    padding: 60px 0;
-    .projects-header .title { font-size: 36px; }
-  }
-
-  .projects-grid {
-    padding: 0 16px;
-    gap: 24px;
-  }
-
-  .project-bento-card {
-    .project-img-wrapper { height: 200px; }
-    .project-info h3 { font-size: 24px; }
-    .p-details-box { padding: 20px; }
-  }
-}
-
-@media (max-width: 400px) {
-  .project-bento-card .info-top {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: $bg-body;
-}
-
+/* Scrollbar Customization */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: $bg-body; }
 ::-webkit-scrollbar-thumb {
   background: $border-color;
-  border-radius: 100px;
-  border: 3px solid $bg-body;
+  border-radius: 10px;
+  border: 4px solid $bg-body;
+  &:hover { background: $text-muted; }
+}
 
-  &:hover {
-    background: $text-muted;
-  }
+/* Accessibility & Utils */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 
 .portfolio-wrapper::selection {

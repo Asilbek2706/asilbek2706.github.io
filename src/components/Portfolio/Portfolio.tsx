@@ -1,124 +1,119 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Portfolio.scss';
 
-import loginImg from '../../assets/images/login.png';
-import shadowImg from '../../assets/images/shadow.png';
-import gameImg from '../../assets/images/game.png';
-import shopImg from '../../assets/images/shop.png';
-import imgMain from '../../assets/images/img.png';
-import img1 from '../../assets/images/img_1.png';
-
-const projects = [
-    {
-        title: "Modern Auth UI",
-        cat: "UI/UX Security",
-        year: "2026",
-        obj: "Seamless DOM state management.",
-        sol: "Vanilla JS logic & CSS variables.",
-        stack: ["HTML5", "CSS3", "JS"],
-        img: loginImg,
-        github: "https://github.com/Asilbek2706/modern-login-signin-form",
-        demo: "https://asilbek2706.github.io/modern-login-signin-form/"
-    },
-    {
-        title: "Shadow Engine",
-        cat: "System Arch",
-        year: "2026",
-        obj: "High-speed system scanning UI.",
-        sol: "Golang logic with premium CSS.",
-        stack: ["Golang", "System UI"],
-        img: shadowImg,
-        github: "https://github.com/Asilbek2706/shadow-scanner-go",
-        demo: null
-    },
-    {
-        title: "Logic Pro Tic-Tac",
-        cat: "Game Engineering",
-        year: "2025",
-        obj: "Algorithmic win checking.",
-        sol: "SASS 7-1 pattern & ES6 loops.",
-        stack: ["SCSS", "JS ES6+"],
-        img: gameImg,
-        github: "https://github.com/Asilbek2706/tic-tac-toe",
-        demo: "https://asilbek2706.github.io/tic-tac-toe/"
-    },
-    {
-        title: "Smart Cart System",
-        cat: "E-Commerce",
-        year: "2025",
-        obj: "Real-time product data flow.",
-        sol: "DOM-based state management.",
-        stack: ["SASS", "JS Arch"],
-        img: shopImg,
-        github: "https://github.com/Asilbek2706/Online-Shopping-Cart",
-        demo: "https://asilbek2706.github.io/Online-Shopping-Cart/"
-    },
-    {
-        title: "SmartShop TS",
-        cat: "E-Commerce",
-        year: "2026",
-        obj: "Type-safe product management & filtering.",
-        sol: "OOP-based TypeScript architecture & SCSS modules.",
-        stack: ["TypeScript", "SCSS", "OOP"],
-        img: imgMain,
-        github: "https://github.com/Asilbek2706/E-Commerce-ts-app",
-        demo: "https://asilbek2706.github.io/E-Commerce-ts-app/"
-    },
-    {
-        title: "Smartphone Shop JS",
-        cat: "Web App",
-        year: "2024",
-        obj: "Responsive smartphone catalog with cart logic.",
-        sol: "Dynamic DOM manipulation & event delegation.",
-        stack: ["JavaScript", "CSS3", "HTML5"],
-        img: img1,
-        github: "https://github.com/Asilbek2706/Smartphones-shop-JS-project",
-        demo: "https://asilbek2706.github.io/Smartphones-shop-JS-project/"
-    }
-];
+interface Project {
+    id: number;
+    title: string;
+    category: string;
+    year: string;
+    objective: string;
+    solution: string;
+    tech_stack: string;
+    image: string;
+    github_link: string;
+    demo_link: string;
+    created_at: string;
+}
 
 const Portfolio: React.FC = () => {
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const baseUrl = import.meta.env.VITE_API_URL;
+                const response = await axios.get(`${baseUrl}/projects/`);
+                const data = response.data.results || response.data;
+                setProjects(Array.isArray(data) ? data : []);
+            } catch (error) {
+                console.error("Ma'lumot olishda xato:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProjects();
+    }, []);
+
+    if (loading) return (
+        <div className="portfolio-wrapper">
+            <div className="portfolio-loader">
+                <div className="spinner"></div>
+                <p>Engineering Archive Loading...</p>
+            </div>
+        </div>
+    );
+
     return (
         <div className="portfolio-wrapper">
-            <header className="projects-header mb-5" data-aos="fade-up">
+            <header className="projects-header" data-aos="fade-up">
                 <div className="badge-container">
-                    <span className="cyber-badge"><i className="bi bi-shield-lock"></i> Engineering Archive</span>
+                    <span className="cyber-badge">
+                        <i className="bi bi-shield-lock"></i> Engineering Archive
+                    </span>
                 </div>
-                <h1 className="title mt-3">Technical <span className="highlight">Case Studies</span></h1>
-                <p className="header-intro">An in-depth showcase of architectural decisions, focusing on system logic and performance.</p>
+                <h1 className="title">
+                    Technical <span className="highlight">Case Studies</span>
+                </h1>
+                <p className="header-intro">
+                    Tizim arxitekturasi va unumdorligiga qaratilgan loyihalar tahlili va muhandislik yechimlari.
+                </p>
             </header>
 
-            <div className="projects-grid">
-                {projects.map((project, index) => (
-                    <article className="project-bento-card" data-aos="fade-up" data-aos-delay={index * 100} key={index}>
-                        <div className="project-img-wrapper">
-                            <img src={project.img} alt={project.title} className="project-img" />
-                            <div className="project-overlay">
-                                <div className="overlay-links">
-                                    <a href={project.github} target="_blank" rel="noreferrer" title="GitHub Code"><i className="bi bi-github"></i></a>
-                                    {project.demo && (
-                                        <a href={project.demo} target="_blank" rel="noreferrer" title="Live Demo"><i className="bi bi-eye"></i></a>
-                                    )}
+            {projects.length === 0 ? (
+                <div className="empty-state">
+                    <p>Hozircha loyihalar mavjud emas.</p>
+                </div>
+            ) : (
+                <div className="projects-grid">
+                    {projects.map((project, index) => (
+                        <article
+                            className="project-bento-card"
+                            key={project.id}
+                            data-aos="fade-up"
+                            data-aos-delay={index * 100}
+                        >
+                            <div className="project-img-wrapper">
+                                <img src={project.image} alt={project.title} className="project-img" />
+                                <div className="project-overlay">
+                                    <div className="overlay-links">
+                                        {project.github_link && (
+                                            <a href={project.github_link} target="_blank" rel="noreferrer">
+                                                <i className="bi bi-github"></i>
+                                            </a>
+                                        )}
+                                        {project.demo_link && (
+                                            <a href={project.demo_link} target="_blank" rel="noreferrer">
+                                                <i className="bi bi-eye"></i>
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="project-info">
-                            <div className="info-top">
-                                <span className="p-cat">{project.cat}</span>
-                                <span className="p-year">{project.year}</span>
+
+                            <div className="project-info">
+                                <div className="info-top">
+                                    <span className="p-cat">{project.category}</span>
+                                    <span className="p-year">{project.year}</span>
+                                </div>
+                                <h3>{project.title}</h3>
+
+                                <div className="p-details-box">
+                                    <p><strong>Objective:</strong> {project.objective}</p>
+                                    <p><strong>Solution:</strong> {project.solution}</p>
+                                </div>
+
+                                <div className="p-stack">
+                                    {project.tech_stack.split(',').map((tech, i) => (
+                                        <span key={i}>{tech.trim()}</span>
+                                    ))}
+                                </div>
                             </div>
-                            <h3>{project.title}</h3>
-                            <div className="p-details-box">
-                                <p><strong>Objective:</strong> {project.obj}</p>
-                                <p><strong>Solution:</strong> {project.sol}</p>
-                            </div>
-                            <div className="p-stack">
-                                {project.stack.map((tech, i) => <span key={i}>{tech}</span>)}
-                            </div>
-                        </div>
-                    </article>
-                ))}
-            </div>
+                        </article>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
